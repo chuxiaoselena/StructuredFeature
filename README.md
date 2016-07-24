@@ -1,7 +1,7 @@
 # StructuredFeature
 This is the code for our work "Structured Feature Learning for Pose estimation"
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 If you use it, please cite our work
 @inproceedings{chu2016structure,
   title={Structured Feature Learning for Pose Estimation},
@@ -11,7 +11,7 @@ If you use it, please cite our work
 }
 
 Our project is written based on Xianjie Chen's code.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 Steps to get your own model:
 	1. Make caffe (We write our own layer for loss, channel dropout and mix interpolation, if 		you are not going to use these functions, you can use your own caffe)
 	2. run "Data_prepare.m" to generate LMDB requires
@@ -24,7 +24,7 @@ Model release:
 	If you are going to test this model, set the variable "test_our_provided_model" to true.
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%R%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%R%%%%%%%%%%%
 version: v2
  
 In v1, the presave files: "cache/lsp/lsp_fconv/lsp_datainfo/Cropped_train.mat" and "cache/lsp/lsp_fconv/lsp_datainfo/Cropped_val.mat" prevent program from generating your own train and validiation data. In this version, we recetified this problem.
