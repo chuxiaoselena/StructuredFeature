@@ -2,6 +2,7 @@
 This is the code for our work "Structured Feature Learning for Pose estimation"
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 If you use it, please cite our work
 @inproceedings{chu2016structure,
   title={Structured Feature Learning for Pose Estimation},
@@ -12,6 +13,7 @@ If you use it, please cite our work
 
 Our project is written based on Xianjie Chen's code.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 Steps to get your own model:
 	1. Make caffe (We write our own layer for loss, channel dropout and mix interpolation, if 		you are not going to use these functions, you can use your own caffe)
 	2. run "Data_prepare.m" to generate LMDB requires
