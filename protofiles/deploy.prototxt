@@ -1,0 +1,1592 @@
+name: "VGG_16layers_RNN_Softmax_Mask(1024-128-9*9*2)-mpi-2gpu"
+# this is changed from VGG_16layers_8
+input: "data"
+input_dim: 1
+input_dim: 3
+input_dim: 448
+input_dim: 448
+
+####################################################
+#-------------- conv 1 ---------------
+layer {
+  name: "conv1_1"
+  type: "Convolution"
+  bottom: "data"
+  top: "conv1_1"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  convolution_param {
+    num_output: 64
+    pad: 1
+    kernel_size: 3
+  }
+}
+layer {
+  name: "relu1_1"
+  type: "ReLU"
+  bottom: "conv1_1"
+  top: "conv1_1"
+}
+layer {
+  name: "conv1_2"
+  type: "Convolution"
+  bottom: "conv1_1"
+  top: "conv1_2"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  convolution_param {
+    num_output: 64
+    pad: 1
+    kernel_size: 3
+  }
+}
+layer {
+  name: "relu1_2"
+  type: "ReLU"
+  bottom: "conv1_2"
+  top: "conv1_2"
+}
+layer {
+  name: "pool1"
+  type: "Pooling"
+  bottom: "conv1_2"
+  top: "pool1"
+  pooling_param {
+    pool: MAX
+    kernel_size: 2
+    stride: 2
+  }
+}
+#-------------- conv 2 ---------------
+layer {
+  name: "conv2_1"
+  type: "Convolution"
+  bottom: "pool1"
+  top: "conv2_1"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  convolution_param {
+    num_output: 128
+    pad: 1
+    kernel_size: 3
+  }
+}
+layer {
+  name: "relu2_1"
+  type: "ReLU"
+  bottom: "conv2_1"
+  top: "conv2_1"
+}
+layer {
+  name: "conv2_2"
+  type: "Convolution"
+  bottom: "conv2_1"
+  top: "conv2_2"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  convolution_param {
+    num_output: 128
+    pad: 1
+    kernel_size: 3
+  }
+}
+layer {
+  name: "relu2_2"
+  type: "ReLU"
+  bottom: "conv2_2"
+  top: "conv2_2"
+}
+layer {
+  name: "pool2"
+  type: "Pooling"
+  bottom: "conv2_2"
+  top: "pool2"
+  pooling_param {
+    pool: MAX
+    kernel_size: 2
+    stride: 2
+  }
+}
+
+#-------------- conv 3 ---------------
+layer {
+  name: "conv3_1"
+  type: "Convolution"
+  bottom: "pool2"
+  top: "conv3_1"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  convolution_param {
+    num_output: 256
+    pad: 1
+    kernel_size: 3
+  }
+}
+layer {
+  name: "relu3_1"
+  type: "ReLU"
+  bottom: "conv3_1"
+  top: "conv3_1"
+}
+layer {
+  name: "conv3_2"
+  type: "Convolution"
+  bottom: "conv3_1"
+  top: "conv3_2"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  convolution_param {
+    num_output: 256
+    pad: 1
+    kernel_size: 3
+  }
+}
+layer {
+  name: "relu3_2"
+  type: "ReLU"
+  bottom: "conv3_2"
+  top: "conv3_2"
+}
+layer {
+  name: "conv3_3"
+  type: "Convolution"
+  bottom: "conv3_2"
+  top: "conv3_3"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  convolution_param {
+    num_output: 256
+    pad: 1
+    kernel_size: 3
+  }
+}
+layer {
+  name: "relu3_3"
+  type: "ReLU"
+  bottom: "conv3_3"
+  top: "conv3_3"
+}
+layer {
+  name: "pool3"
+  type: "Pooling"
+  bottom: "conv3_3"
+  top: "pool3"
+  pooling_param {
+    pool: MAX
+    kernel_size: 2
+    stride: 2
+  }
+}
+
+
+#---------------- conv 4 (3)----------------------
+layer {
+  name: "conv4_1"
+  type: "Convolution"
+  bottom: "pool3"
+  top: "conv4_1"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  convolution_param {
+    num_output: 512
+    pad: 1
+    kernel_size: 3
+  }
+}
+layer {
+  name: "relu4_1"
+  type: "ReLU"
+  bottom: "conv4_1"
+  top: "conv4_1"
+}
+layer {
+  name: "conv4_2"
+  type: "Convolution"
+  bottom: "conv4_1"
+  top: "conv4_2"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  convolution_param {
+    num_output: 512
+    pad: 1
+    kernel_size: 3
+  }
+}
+layer {
+  name: "relu4_2"
+  type: "ReLU"
+  bottom: "conv4_2"
+  top: "conv4_2"
+}
+layer {
+  name: "conv4_3"
+  type: "Convolution"
+  bottom: "conv4_2"
+  top: "conv4_3"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  convolution_param {
+    num_output: 512
+    pad: 1
+    kernel_size: 3
+  }
+}
+layer {
+  name: "relu4_3"
+  type: "ReLU"
+  bottom: "conv4_3"
+  top: "pool4"
+}
+#layer {
+#  name: "pool4"
+#  type: "Pooling"
+#  bottom: "conv4_3"
+#  top: "pool4"
+#  pooling_param {
+#    pool: MAX
+#    kernel_size: 2
+#    stride: 2
+#  }
+#}
+
+
+#---------------- conv 5 ----------------------
+layer {
+  name: "conv5_1"
+  type: "Convolution"
+  bottom: "pool4"
+  top: "conv5_1"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  convolution_param {
+    num_output: 512
+    pad: 1
+    kernel_size: 3
+  }
+}
+layer {
+  name: "relu5_1"
+  type: "ReLU"
+  bottom: "conv5_1"
+  top: "conv5_1"
+}
+layer {
+  name: "conv5_2"
+  type: "Convolution"
+  bottom: "conv5_1"
+  top: "conv5_2"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  convolution_param {
+    num_output: 512
+    pad: 1
+    kernel_size: 3
+  }
+}
+layer {
+  name: "relu5_2"
+  type: "ReLU"
+  bottom: "conv5_2"
+  top: "conv5_2"
+}
+layer {
+  name: "conv5_3"
+  type: "Convolution"
+  bottom: "conv5_2"
+  top: "conv5_3"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  convolution_param {
+    num_output: 512
+    pad: 1
+    kernel_size: 3
+  }
+}
+layer {
+  name: "relu5_3"
+  type: "ReLU"
+  bottom: "conv5_3"
+  top: "pool5"
+}
+
+#layer {
+#  name: "pool5"
+#  type: "Pooling"
+#  bottom: "conv5_3"
+#  top: "pool5"
+#  pooling_param {
+#    pool: MAX
+#    kernel_size: 2
+#    stride: 2
+#  }
+#}
+
+
+#---------------- fconv layers ----------------------
+layer {
+  name: "fcn6_new"
+  type: "Convolution"
+  bottom: "pool5"
+  top: "fconv6"
+  param {
+    lr_mult: 10
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 20
+    decay_mult: 0
+  }
+  convolution_param {
+    num_output: 1024
+    kernel_size: 7
+    pad: 3
+    weight_filler {
+      type: "gaussian"
+      std: 0.001
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+
+#---------------- BN -----------------
+layer {
+  name: "fconv6_bn" type: "BN" bottom: "fconv6" top: "fconv6_bn"
+  param { lr_mult: 1 decay_mult: 0 }
+  param { lr_mult: 1 decay_mult: 0 }
+  bn_param {
+    slope_filler {
+      type: "constant"
+      value: 1
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+  }
+}
+
+
+layer {
+  name: "relu6"
+  type: "ReLU"
+  bottom: "fconv6_bn"
+  top: "fconv6_bn"
+}
+layer {
+  name: "drop6"
+  type: "ChannelDropout"
+  bottom: "fconv6_bn"
+  top: "fconv6_bn"
+  dropout_param {
+    dropout_ratio: 0.5
+  }
+}
+
+
+#############################################################################
+#----------------------  seperated layers -------------------------------
+#############################################################################
+
+#######################################################
+#-------------- fconv7_7 -----------------
+layer {name: "fconv7_7" type: "Convolution" bottom: "fconv6_bn" top: "fconv7_7" param {lr_mult: 10 decay_mult: 1} param {lr_mult: 20 decay_mult: 0}
+  convolution_param { num_output: 128 kernel_size:1 pad: 0 weight_filler {type: "gaussian" std: 0.01} bias_filler {type: "constant" value: 0}}}
+
+layer {name: "relu7_7" type: "ReLU" bottom: "fconv7_7" top: "fconv7_7+"}
+
+#---------   pass info from: 7 to 6 (9*9*2) ----------------
+layer {name: "fconv7_7to6_step1" type: "Convolution" bottom: "fconv7_7+" top: "fconv7_7to6_step1" param {lr_mult: 10 decay_mult: 2} param {lr_mult: 20 decay_mult: 0}
+  convolution_param { num_output: 64 kernel_size:7 pad: 3 weight_filler {type: "gaussian" std: 0.01}  bias_filler {type: "constant" value: 0}}}
+layer {name: "relu7_7to6_step1" type: "ReLU" bottom: "fconv7_7to6_step1" top: "fconv7_7to6_step1"}
+#---- step 2 ------
+layer {name: "fconv7_7to6_step2" type: "Convolution" bottom: "fconv7_7to6_step1" top: "fconv7_7to6_step2" param {lr_mult: 10 decay_mult: 2} param {lr_mult: 20 decay_mult: 0}
+  convolution_param { num_output: 128 kernel_size:7 pad: 3 weight_filler {type: "gaussian" std: 0.01}  bias_filler {type: "constant" value: 0}}}
+
+##################################################
+#-------------- fconv7_6 9*9*2 -----------------
+layer {name: "fconv7_6" type: "Convolution" bottom: "fconv6_bn" top: "fconv7_6" param {lr_mult: 10 decay_mult: 1} param {lr_mult: 20 decay_mult: 0}
+  convolution_param { num_output: 128 kernel_size:1 pad: 0 weight_filler {type: "gaussian" std: 0.01} bias_filler {type: "constant" value: 0}}}
+#------------------ add info comed from 6----------------------------
+layer {name: "Pass_7to6" type: "Eltwise" bottom:"fconv7_7to6_step2" bottom:"fconv7_6" top: "fconv7_6+"}
+layer {name: "relu7_6" type: "ReLU" bottom: "fconv7_6+" top: "fconv7_6+"}
+
+#---------   pass info from: 6 to 5 (9*9*2) ----------------
+layer {name: "fconv7_6to5_step1" type: "Convolution" bottom: "fconv7_6+" top: "fconv7_6to5_step1" param {lr_mult: 10 decay_mult: 2} param {lr_mult: 20 decay_mult: 0}
+  convolution_param { num_output: 64 kernel_size:7 pad: 3 weight_filler {type: "gaussian" std: 0.01}  bias_filler {type: "constant" value: 0}}}
+layer {name: "relu7_6to5_step1" type: "ReLU" bottom: "fconv7_6to5_step1" top: "fconv7_6to5_step1"}
+#----step 2 
+layer {name: "fconv7_6to5_step2" type: "Convolution" bottom: "fconv7_6to5_step1" top: "fconv7_6to5_step2" param {lr_mult: 10 decay_mult: 2} param {lr_mult: 20 decay_mult: 0}
+  convolution_param { num_output: 128 kernel_size:7 pad: 3 weight_filler {type: "gaussian" std: 0.01}  bias_filler {type: "constant" value: 0}}}
+
+#######################################################
+#-------------- fconv7_5 -----------------
+layer {name: "fconv7_5" type: "Convolution" bottom: "fconv6_bn" top: "fconv7_5" param {lr_mult: 10 decay_mult: 1} param {lr_mult: 20 decay_mult: 0}
+  convolution_param { num_output: 128 kernel_size:1 pad: 0  weight_filler {type: "gaussian" std: 0.01} bias_filler {type: "constant" value: 0}}}
+
+#---------   collect info from: point 6 ----------------
+layer {name: "Pass_6to5" type: "Eltwise" bottom:"fconv7_6to5_step2" bottom:"fconv7_5" top: "fconv7_5+"}
+layer {name: "relu7_5" type: "ReLU" bottom: "fconv7_5+" top: "fconv7_5+"}
+
+#---------   pass info from: 5 to 4 (9*9*2) ----------------
+layer {name: "fconv7_5to4_step1" type: "Convolution" bottom: "fconv7_5+" top: "fconv7_5to4_step1" param {lr_mult: 10 decay_mult: 2} param {lr_mult: 20 decay_mult: 0}
+  convolution_param { num_output: 64 kernel_size:7 pad: 3 weight_filler {type: "gaussian" std: 0.01}  bias_filler {type: "constant" value: 0}}}
+layer {name: "relu7_5to4_step1" type: "ReLU" bottom: "fconv7_5to4_step1" top: "fconv7_5to4_step1"}
+#----step 2 
+layer {name: "fconv7_5to4_step2" type: "Convolution" bottom: "fconv7_5to4_step1" top: "fconv7_5to4_step2" param {lr_mult: 10 decay_mult: 2} param {lr_mult: 20 decay_mult: 0}
+  convolution_param { num_output: 128 kernel_size:7 pad: 3 weight_filler {type: "gaussian" std: 0.01}  bias_filler {type: "constant" value: 0}}}
+
+#######################################################
+#-------------- fconv7_4 -----------------
+layer {name: "fconv7_4" type: "Convolution" bottom: "fconv6_bn" top: "fconv7_4"  param {lr_mult: 10 decay_mult: 1}  param {lr_mult: 20 decay_mult: 0}
+  convolution_param { num_output: 128 kernel_size:1 pad: 0   weight_filler {type: "gaussian" std: 0.01}  bias_filler {type: "constant" value: 0}}}
+
+#---------   collect info from 5 to 4 ----------------
+layer {name: "Pass_5to4" type: "Eltwise" bottom:"fconv7_5to4_step2" bottom:"fconv7_4" top: "fconv7_4+"}
+layer {name: "relu7_4" type: "ReLU" bottom: "fconv7_4+" top: "fconv7_4+"}
+
+#---------   pass info from: 4 to 3 (9*9*2) ----------------
+layer {name: "fconv7_4to3_step1" type: "Convolution" bottom: "fconv7_4+" top: "fconv7_4to3_step1" param {lr_mult: 10 decay_mult: 2} param {lr_mult: 20 decay_mult: 0}
+  convolution_param { num_output: 64 kernel_size:7 pad: 3 weight_filler {type: "gaussian" std: 0.01}  bias_filler {type: "constant" value: 0}}}
+layer {name: "relu7_4to3_step1" type: "ReLU" bottom: "fconv7_4to3_step1" top: "fconv7_4to3_step1"}
+#----step 2 
+layer {name: "fconv7_4to3_step2" type: "Convolution" bottom: "fconv7_4to3_step1" top: "fconv7_4to3_step2" param {lr_mult: 10 decay_mult: 2} param {lr_mult: 20 decay_mult: 0}
+  convolution_param { num_output: 128 kernel_size:7 pad: 3 weight_filler {type: "gaussian" std: 0.01}  bias_filler {type: "constant" value: 0}}}
+
+
+
+
+
+#######################################################
+#-------------- fconv7_14 -----------------
+layer {name: "fconv7_14" type: "Convolution" bottom: "fconv6_bn" top: "fconv7_14" param {lr_mult: 10 decay_mult: 1} param {lr_mult: 20 decay_mult: 0}
+  convolution_param { num_output: 128 kernel_size:1 pad: 0  weight_filler {type: "gaussian" std: 0.01} bias_filler {type: "constant" value: 0}}}
+layer {name: "relu7_14" type: "ReLU" bottom: "fconv7_14" top: "fconv7_14+"}
+
+
+#---------   pass info from: 14 to 13 (9*9*2) ----------------
+layer {name: "fconv7_14to13_step1" type: "Convolution" bottom: "fconv7_14+" top: "fconv7_14to13_step1" param {lr_mult: 10 decay_mult: 2} param {lr_mult: 20 decay_mult: 0}
+  convolution_param { num_output: 64 kernel_size:7 pad: 3 weight_filler {type: "gaussian" std: 0.01}  bias_filler {type: "constant" value: 0}}}
+layer {name: "relu7_14to13_step1" type: "ReLU" bottom: "fconv7_14to13_step1" top: "fconv7_14to13_step1"}
+#----step 2 
+layer {name: "fconv7_14to13_step2" type: "Convolution" bottom: "fconv7_14to13_step1" top: "fconv7_14to13_step2" param {lr_mult: 10 decay_mult: 2} param {lr_mult: 20 decay_mult: 0}
+  convolution_param { num_output: 128 kernel_size:7 pad: 3 weight_filler {type: "gaussian" std: 0.01}  bias_filler {type: "constant" value: 0}}}
+
+#######################################################
+#-------------- fconv7_13 -----------------
+layer {name: "fconv7_13" type: "Convolution" bottom: "fconv6_bn" top: "fconv7_13" param {lr_mult: 10 decay_mult: 1} param {lr_mult: 20 decay_mult: 0}
+  convolution_param { num_output: 128 kernel_size:1 pad: 0  weight_filler {type: "gaussian" std: 0.01} bias_filler {type: "constant" value: 0}}}
+#---------   collect info from 14 to 13 ----------------
+layer {name: "Pass_14to13" type: "Eltwise" bottom:"fconv7_14to13_step2" bottom:"fconv7_13" top: "fconv7_13+"}
+layer {name: "relu7_13" type: "ReLU" bottom: "fconv7_13+" top: "fconv7_13+"}
+
+#---------   pass info from: 13 to 12 (7*7*2) ----------------
+layer {name: "fconv7_13to12_step1" type: "Convolution" bottom: "fconv7_13+" top: "fconv7_13to12_step1" param {lr_mult: 10 decay_mult: 2} param {lr_mult: 20 decay_mult: 0}
+  convolution_param { num_output: 64 kernel_size:7 pad: 3 weight_filler {type: "gaussian" std: 0.01}  bias_filler {type: "constant" value: 0}}}
+layer {name: "relu7_13to12_step1" type: "ReLU" bottom: "fconv7_13to12_step1" top: "fconv7_13to12_step1"}
+#----step 2 
+layer {name: "fconv7_13to12_step2" type: "Convolution" bottom: "fconv7_13to12_step1" top: "fconv7_13to12_step2" param {lr_mult: 10 decay_mult: 2} param {lr_mult: 20 decay_mult: 0}
+  convolution_param { num_output: 128 kernel_size:7 pad: 3 weight_filler {type: "gaussian" std: 0.01}  bias_filler {type: "constant" value: 0}}}
+
+#######################################################
+#-------------- fconv7_12 -----------------
+layer {name: "fconv7_12" type: "Convolution" bottom: "fconv6_bn" top: "fconv7_12" param {lr_mult: 10 decay_mult: 1} param {lr_mult: 20 decay_mult: 0}
+  convolution_param { num_output: 128 kernel_size:1 pad: 0  weight_filler {type: "gaussian" std: 0.01} bias_filler {type: "constant" value: 0}}}
+
+#---------   collect info from 13 to 12 ----------------
+layer {name: "Pass_13to12" type: "Eltwise" bottom:"fconv7_13to12_step2" bottom:"fconv7_12" top: "fconv7_12+"}
+layer {name: "relu7_12" type: "ReLU" bottom: "fconv7_12+" top: "fconv7_12+"}
+
+#---------   pass info from: 12 to 11 (7*7*2) ----------------
+layer {name: "fconv7_12to11_step1" type: "Convolution" bottom: "fconv7_12+" top: "fconv7_12to11_step1" param {lr_mult: 10 decay_mult: 2} param {lr_mult: 20 decay_mult: 0}
+  convolution_param { num_output: 64 kernel_size:7 pad: 3 weight_filler {type: "gaussian" std: 0.01}  bias_filler {type: "constant" value: 0}}}
+layer {name: "relu7_12to11_step1" type: "ReLU" bottom: "fconv7_12to11_step1" top: "fconv7_12to11_step1"}
+#----step 2 
+layer {name: "fconv7_12to11_step2" type: "Convolution" bottom: "fconv7_12to11_step1" top: "fconv7_12to11_step2" param {lr_mult: 10 decay_mult: 2} param {lr_mult: 20 decay_mult: 0}
+  convolution_param { num_output: 128 kernel_size:7 pad: 3 weight_filler {type: "gaussian" std: 0.01}  bias_filler {type: "constant" value: 0}}}
+
+#######################################################
+#-------------- fconv7_11 -----------------
+layer {name: "fconv7_11" type: "Convolution" bottom: "fconv6_bn" top: "fconv7_11" param {lr_mult: 10 decay_mult: 1} param {lr_mult: 20 decay_mult: 0}
+  convolution_param { num_output: 128 kernel_size:1 pad: 0  weight_filler {type: "gaussian" std: 0.01} bias_filler {type: "constant" value: 0}}}
+#---------   collect info from 12 to 11 ----------------
+layer {name: "Pass_12to11" type: "Eltwise" bottom:"fconv7_12to11_step2" bottom:"fconv7_11" top: "fconv7_11+"}
+layer {name: "relu7_11" type: "ReLU" bottom: "fconv7_11+" top: "fconv7_11+"}
+
+#---------   pass info from: 11 to 10 (7*7*2) ----------------
+layer {name: "fconv7_11to10_step1" type: "Convolution" bottom: "fconv7_11+" top: "fconv7_11to10_step1" param {lr_mult: 10 decay_mult: 2} param {lr_mult: 20 decay_mult: 0}
+  convolution_param { num_output: 64 kernel_size:7 pad: 3 weight_filler {type: "gaussian" std: 0.01}  bias_filler {type: "constant" value: 0}}}
+layer {name: "relu7_11to10_step1" type: "ReLU" bottom: "fconv7_11to10_step1" top: "fconv7_11to10_step1"}
+#----step 2 
+layer {name: "fconv7_11to10_step2" type: "Convolution" bottom: "fconv7_11to10_step1" top: "fconv7_11to10_step2" param {lr_mult: 10 decay_mult: 2} param {lr_mult: 20 decay_mult: 0}
+  convolution_param { num_output: 128 kernel_size:7 pad: 3 weight_filler {type: "gaussian" std: 0.01}  bias_filler {type: "constant" value: 0}}}
+
+
+#######################################################
+#-------------- fconv7_10 -----------------
+layer {name: "fconv7_10" type: "Convolution" bottom: "fconv6_bn" top: "fconv7_10" param {lr_mult: 10 decay_mult: 1} param {lr_mult: 20 decay_mult: 0}
+  convolution_param { num_output: 128 kernel_size:1 pad: 0  weight_filler {type: "gaussian" std: 0.01} bias_filler {type: "constant" value: 0}}}
+
+#---------   collect info from 11 to 10 ----------------
+layer {name: "Pass_11to10" type: "Eltwise" bottom:"fconv7_11to10_step2" bottom:"fconv7_10" top: "fconv7_10+"}
+layer {name: "relu7_10" type: "ReLU" bottom: "fconv7_10+" top: "fconv7_10+"}
+
+
+#---------   pass info from: 10 to 9 (9*9*2) ----------------
+layer {name: "fconv7_10to9_step1" type: "Convolution" bottom: "fconv7_10+" top: "fconv7_10to9_step1" param {lr_mult: 10 decay_mult: 2} param {lr_mult: 20 decay_mult: 0}
+  convolution_param { num_output: 64 kernel_size:7 pad: 3 weight_filler {type: "gaussian" std: 0.01}  bias_filler {type: "constant" value: 0}}}
+layer {name: "relu7_10to9_step1" type: "ReLU" bottom: "fconv7_10to9_step1" top: "fconv7_10to9_step1"}
+#----step 2 
+layer {name: "fconv7_10to9_step2" type: "Convolution" bottom: "fconv7_10to9_step1" top: "fconv7_10to9_step2" param {lr_mult: 10 decay_mult: 2} param {lr_mult: 20 decay_mult: 0}
+  convolution_param { num_output: 128 kernel_size:7 pad: 3 weight_filler {type: "gaussian" std: 0.01}  bias_filler {type: "constant" value: 0}}}
+
+
+#######################################################
+#-------------- fconv7_9 -----------------
+layer {name: "fconv7_9" type: "Convolution" bottom: "fconv6_bn" top: "fconv7_9" param {lr_mult: 10 decay_mult: 1} param {lr_mult: 20 decay_mult: 0}
+  convolution_param { num_output: 128 kernel_size:1 pad: 0  weight_filler {type: "gaussian" std: 0.01} bias_filler {type: "constant" value: 0}}}
+
+#---------   collect info from 10 to 9 ----------------
+layer {name: "Pass_10to9" type: "Eltwise" bottom:"fconv7_10to9_step2" bottom:"fconv7_9" top: "fconv7_9+"}
+layer {name: "relu7_9" type: "ReLU" bottom: "fconv7_9+" top: "fconv7_9+"}
+
+#---------   pass info from: 9 to 8 (9*9*2) ----------------
+layer {name: "fconv7_9to8_step1" type: "Convolution" bottom: "fconv7_9+" top: "fconv7_9to8_step1" param {lr_mult: 10 decay_mult: 2} param {lr_mult: 20 decay_mult: 0}
+  convolution_param { num_output: 64 kernel_size:7 pad: 3 weight_filler {type: "gaussian" std: 0.01}  bias_filler {type: "constant" value: 0}}}
+layer {name: "relu7_9to8_step1" type: "ReLU" bottom: "fconv7_9to8_step1" top: "fconv7_9to8_step1"}
+#----step 2 
+layer {name: "fconv7_9to8_step2" type: "Convolution" bottom: "fconv7_9to8_step1" top: "fconv7_9to8_step2" param {lr_mult: 10 decay_mult: 2} param {lr_mult: 20 decay_mult: 0}
+  convolution_param { num_output: 128 kernel_size:7 pad: 3 weight_filler {type: "gaussian" std: 0.01}  bias_filler {type: "constant" value: 0}}}
+
+
+#######################################################
+#-------------- fconv7_8 -----------------
+layer {name: "fconv7_8" type: "Convolution" bottom: "fconv6_bn" top: "fconv7_8" param {lr_mult: 10 decay_mult: 1} param {lr_mult: 20 decay_mult: 0}
+  convolution_param { num_output: 128 kernel_size:1 pad: 0  weight_filler {type: "gaussian" std: 0.01} bias_filler {type: "constant" value: 0}}}
+
+#---------   collect info from 9 to 8 ----------------
+layer {name: "Pass_9to8" type: "Eltwise" bottom:"fconv7_9to8_step2" bottom:"fconv7_8" top: "fconv7_8+"}
+layer {name: "relu7_8" type: "ReLU" bottom: "fconv7_8+" top: "fconv7_8+"}
+
+
+#---------   pass info from: 8 to 3 (9*9*2) ----------------
+layer {name: "fconv7_8to3_step1" type: "Convolution" bottom: "fconv7_8+" top: "fconv7_8to3_step1" param {lr_mult: 10 decay_mult: 2} param {lr_mult: 20 decay_mult: 0}
+  convolution_param { num_output: 64 kernel_size:7 pad: 3 weight_filler {type: "gaussian" std: 0.01}  bias_filler {type: "constant" value: 0}}}
+layer {name: "relu7_8to3_step1" type: "ReLU" bottom: "fconv7_8to3_step1" top: "fconv7_8to3_step1"}
+#----step 2 
+layer {name: "fconv7_8to3_step2" type: "Convolution" bottom: "fconv7_8to3_step1" top: "fconv7_8to3_step2" param {lr_mult: 10 decay_mult: 2} param {lr_mult: 20 decay_mult: 0}
+  convolution_param { num_output: 128 kernel_size:7 pad: 3 weight_filler {type: "gaussian" std: 0.01}  bias_filler {type: "constant" value: 0}}}
+
+
+
+#######################################################
+#-------------- fconv7_3 -----------------
+layer {name: "fconv7_3" type: "Convolution" bottom: "fconv6_bn" top: "fconv7_3" param {lr_mult: 10 decay_mult: 1} param {lr_mult: 20 decay_mult: 0}
+  convolution_param { num_output: 128 kernel_size:1 pad: 0  weight_filler {type: "gaussian" std: 0.01} bias_filler {type: "constant" value: 0}}}
+
+#---------   collect info from 4 8 to 3 ----------------
+layer {name: "Pass_84to3" type: "Eltwise"  bottom:"fconv7_8to3_step2" bottom:"fconv7_4to3_step2" bottom:"fconv7_3" top: "fconv7_3+"}
+layer {name: "relu7_3" type: "ReLU" bottom: "fconv7_3+" top: "fconv7_3+"}
+
+#---------   pass info from: 3 to 2 (9*9*2) ----------------
+layer {name: "fconv7_3to2_step1" type: "Convolution" bottom: "fconv7_3+" top: "fconv7_3to2_step1" param {lr_mult: 10 decay_mult: 2} param {lr_mult: 20 decay_mult: 0}
+  convolution_param { num_output: 64 kernel_size:7 pad: 3 weight_filler {type: "gaussian" std: 0.01}  bias_filler {type: "constant" value: 0}}}
+layer {name: "relu7_3to2_step1" type: "ReLU" bottom: "fconv7_3to2_step1" top: "fconv7_3to2_step1"}
+#----step 2 
+layer {name: "fconv7_3to2_step2" type: "Convolution" bottom: "fconv7_3to2_step1" top: "fconv7_3to2_step2" param {lr_mult: 10 decay_mult: 2} param {lr_mult: 20 decay_mult: 0}
+  convolution_param { num_output: 128 kernel_size:7 pad: 3 weight_filler {type: "gaussian" std: 0.01}  bias_filler {type: "constant" value: 0}}}
+
+
+
+
+
+
+
+
+
+
+#######################################################
+#-------------- fconv7_19 -----------------
+layer {name: "fconv7_19" type: "Convolution" bottom: "fconv6_bn" top: "fconv7_19" param {lr_mult: 10 decay_mult: 1} param {lr_mult: 20 decay_mult: 0}
+  convolution_param { num_output: 128 kernel_size:1 pad: 0  weight_filler {type: "gaussian" std: 0.01} bias_filler {type: "constant" value: 0}}}
+layer {name: "relu7_19" type: "ReLU" bottom: "fconv7_19" top: "fconv7_19+"}
+
+#---------   pass info from: 19 to 18 (9*9*2) ----------------
+layer {name: "fconv7_19to18_step1" type: "Convolution" bottom: "fconv7_19+" top: "fconv7_19to18_step1" param {lr_mult: 10 decay_mult: 2} param {lr_mult: 20 decay_mult: 0}
+  convolution_param { num_output: 64 kernel_size:7 pad: 3 weight_filler {type: "gaussian" std: 0.01}  bias_filler {type: "constant" value: 0}}}
+layer {name: "relu7_19to18_step1" type: "ReLU" bottom: "fconv7_19to18_step1" top: "fconv7_19to18_step1"}
+#----step 2 
+layer {name: "fconv7_19to18_step2" type: "Convolution" bottom: "fconv7_19to18_step1" top: "fconv7_19to18_step2" param {lr_mult: 10 decay_mult: 2} param {lr_mult: 20 decay_mult: 0}
+  convolution_param { num_output: 128 kernel_size:7 pad: 3 weight_filler {type: "gaussian" std: 0.01}  bias_filler {type: "constant" value: 0}}}
+
+
+#######################################################
+#-------------- fconv7_18 -----------------
+layer {name: "fconv7_18" type: "Convolution" bottom: "fconv6_bn" top: "fconv7_18" param {lr_mult: 10 decay_mult: 1} param {lr_mult: 20 decay_mult: 0}
+  convolution_param { num_output: 128 kernel_size:1 pad: 0  weight_filler {type: "gaussian" std: 0.01} bias_filler {type: "constant" value: 0}}}
+
+#---------   collect info from 19 to 18 ----------------
+layer {name: "Pass_19to18" type: "Eltwise" bottom:"fconv7_19to18_step2" bottom:"fconv7_18" top: "fconv7_18+"}
+layer {name: "relu7_18" type: "ReLU" bottom: "fconv7_18+" top: "fconv7_18+"}
+
+#---------   pass info from: 18 to 17 (7*7*2) ----------------
+layer {name: "fconv7_18to17_step1" type: "Convolution" bottom: "fconv7_18+" top: "fconv7_18to17_step1" param {lr_mult: 10 decay_mult: 2} param {lr_mult: 20 decay_mult: 0}
+  convolution_param { num_output: 64 kernel_size:7 pad: 3 weight_filler {type: "gaussian" std: 0.01}  bias_filler {type: "constant" value: 0}}}
+layer {name: "relu7_18to17_step1" type: "ReLU" bottom: "fconv7_18to17_step1" top: "fconv7_18to17_step1"}
+#----step 2 
+layer {name: "fconv7_18to17_step2" type: "Convolution" bottom: "fconv7_18to17_step1" top: "fconv7_18to17_step2" param {lr_mult: 10 decay_mult: 2} param {lr_mult: 20 decay_mult: 0}
+  convolution_param { num_output: 128 kernel_size:7 pad: 3 weight_filler {type: "gaussian" std: 0.01}  bias_filler {type: "constant" value: 0}}}
+
+
+#######################################################
+#-------------- fconv7_17 -----------------
+layer {name: "fconv7_17" type: "Convolution" bottom: "fconv6_bn" top: "fconv7_17" param {lr_mult: 10 decay_mult: 1} param {lr_mult: 20 decay_mult: 0}
+  convolution_param { num_output: 128 kernel_size:1 pad: 0 weight_filler {type: "gaussian" std: 0.01} bias_filler {type: "constant" value: 0}}}
+
+#---------   collect info from 18 to 17 ----------------
+layer {name: "Pass_18to17" type: "Eltwise" bottom:"fconv7_18to17_step2" bottom:"fconv7_17" top: "fconv7_17+"}
+layer {name: "relu7_17" type: "ReLU" bottom: "fconv7_17+" top: "fconv7_17+"}
+
+#---------   pass info from: 17 to 16 (7*7*2) ----------------
+layer {name: "fconv7_17to16_step1" type: "Convolution" bottom: "fconv7_17+" top: "fconv7_17to16_step1" param {lr_mult: 10 decay_mult: 2} param {lr_mult: 20 decay_mult: 0}
+  convolution_param { num_output: 64 kernel_size:7 pad: 3 weight_filler {type: "gaussian" std: 0.01}  bias_filler {type: "constant" value: 0}}}
+layer {name: "relu7_17to16_step1" type: "ReLU" bottom: "fconv7_17to16_step1" top: "fconv7_17to16_step1"}
+#----step 2 
+layer {name: "fconv7_17to16_step2" type: "Convolution" bottom: "fconv7_17to16_step1" top: "fconv7_17to16_step2" param {lr_mult: 10 decay_mult: 2} param {lr_mult: 20 decay_mult: 0}
+  convolution_param { num_output: 128 kernel_size:7 pad: 3 weight_filler {type: "gaussian" std: 0.01}  bias_filler {type: "constant" value: 0}}}
+
+#######################################################
+#-------------- fconv7_16 -----------------
+layer {name: "fconv7_16" type: "Convolution" bottom: "fconv6_bn" top: "fconv7_16" param {lr_mult: 10 decay_mult: 1} param {lr_mult: 20 decay_mult: 0}
+  convolution_param { num_output: 128 kernel_size:1 pad: 0  weight_filler {type: "gaussian" std: 0.01} bias_filler {type: "constant" value: 0}}}
+
+#---------   collect info from 17 to 16 ----------------
+layer {name: "Pass_17to16" type: "Eltwise" bottom:"fconv7_17to16_step2" bottom:"fconv7_16" top: "fconv7_16+"}
+layer {name: "relu7_16" type: "ReLU" bottom: "fconv7_16+" top: "fconv7_16+"}
+
+#---------   pass info from: 16 to 15 (9*9*2) ----------------
+layer {name: "fconv7_16to15_step1" type: "Convolution" bottom: "fconv7_16+" top: "fconv7_16to15_step1" param {lr_mult: 10 decay_mult: 2} param {lr_mult: 20 decay_mult: 0}
+  convolution_param { num_output: 64 kernel_size:7 pad: 3 weight_filler {type: "gaussian" std: 0.01}  bias_filler {type: "constant" value: 0}}}
+layer {name: "relu7_16to15_step1" type: "ReLU" bottom: "fconv7_16to15_step1" top: "fconv7_16to15_step1"}
+#----step 2 
+layer {name: "fconv7_16to15_step2" type: "Convolution" bottom: "fconv7_16to15_step1" top: "fconv7_16to15_step2" param {lr_mult: 10 decay_mult: 2} param {lr_mult: 20 decay_mult: 0}
+  convolution_param { num_output: 128 kernel_size:7 pad: 3 weight_filler {type: "gaussian" std: 0.01}  bias_filler {type: "constant" value: 0}}}
+
+
+#######################################################
+#-------------- fconv7_26 -----------------
+layer {name: "fconv7_26" type: "Convolution" bottom: "fconv6_bn" top: "fconv7_26" param {lr_mult: 10 decay_mult: 1} param {lr_mult: 20 decay_mult: 0}
+  convolution_param { num_output: 128 kernel_size:1 pad: 0  weight_filler {type: "gaussian" std: 0.01} bias_filler {type: "constant" value: 0}}}
+layer {name: "relu7_26" type: "ReLU" bottom: "fconv7_26" top: "fconv7_26+"}
+
+#---------   pass info from: 26 to 25 (7*7*2) ----------------
+layer {name: "fconv7_26to25_step1" type: "Convolution" bottom: "fconv7_26+" top: "fconv7_26to25_step1" param {lr_mult: 10 decay_mult: 2} param {lr_mult: 20 decay_mult: 0}
+  convolution_param { num_output: 64 kernel_size:7 pad: 3 weight_filler {type: "gaussian" std: 0.01}  bias_filler {type: "constant" value: 0}}}
+layer {name: "relu7_26to25_step1" type: "ReLU" bottom: "fconv7_26to25_step1" top: "fconv7_26to25_step1"}
+#----step 2 
+layer {name: "fconv7_26to25_step2" type: "Convolution" bottom: "fconv7_26to25_step1" top: "fconv7_26to25_step2" param {lr_mult: 10 decay_mult: 2} param {lr_mult: 20 decay_mult: 0}
+  convolution_param { num_output: 128 kernel_size:7 pad: 3 weight_filler {type: "gaussian" std: 0.01}  bias_filler {type: "constant" value: 0}}}
+
+#######################################################
+#-------------- fconv7_25 -----------------
+layer {name: "fconv7_25" type: "Convolution" bottom: "fconv6_bn" top: "fconv7_25" param {lr_mult: 10 decay_mult: 1} param {lr_mult: 20 decay_mult: 0}
+  convolution_param { num_output: 128 kernel_size:1 pad: 0  weight_filler {type: "gaussian" std: 0.01} bias_filler {type: "constant" value: 0}}}
+
+#---------   collect info from 26 to 25 ----------------
+layer {name: "Pass_26to25" type: "Eltwise" bottom:"fconv7_26to25_step2" bottom:"fconv7_25" top: "fconv7_25+"}
+layer {name: "relu7_25" type: "ReLU" bottom: "fconv7_25+" top: "fconv7_25+"}
+
+#---------   pass info from: 25 to 24 (9*9*2) ----------------
+layer {name: "fconv7_25to24_step1" type: "Convolution" bottom: "fconv7_25+" top: "fconv7_25to24_step1" param {lr_mult: 10 decay_mult: 2} param {lr_mult: 20 decay_mult: 0}
+  convolution_param { num_output: 64 kernel_size:7 pad: 3 weight_filler {type: "gaussian" std: 0.01}  bias_filler {type: "constant" value: 0}}}
+layer {name: "relu7_25to24_step1" type: "ReLU" bottom: "fconv7_25to24_step1" top: "fconv7_25to24_step1"}
+#----step 2 
+layer {name: "fconv7_25to24_step2" type: "Convolution" bottom: "fconv7_25to24_step1" top: "fconv7_25to24_step2" param {lr_mult: 10 decay_mult: 2} param {lr_mult: 20 decay_mult: 0}
+  convolution_param { num_output: 128 kernel_size:7 pad: 3 weight_filler {type: "gaussian" std: 0.01}  bias_filler {type: "constant" value: 0}}}
+
+
+#######################################################
+#-------------- fconv7_24 -----------------
+layer {name: "fconv7_24" type: "Convolution" bottom: "fconv6_bn" top: "fconv7_24" param {lr_mult: 10 decay_mult: 1} param {lr_mult: 20 decay_mult: 0}
+  convolution_param { num_output: 128 kernel_size:1 pad: 0  weight_filler {type: "gaussian" std: 0.01} bias_filler {type: "constant" value: 0}}}
+
+#---------   collect info from 25 to 24 ----------------
+layer {name: "Pass_25to24" type: "Eltwise"  bottom:"fconv7_25to24_step2" bottom:"fconv7_24" top: "fconv7_24+"}
+layer {name: "relu7_24" type: "ReLU" bottom: "fconv7_24+" top: "fconv7_24+"}
+
+#---------   pass info from: 24 to 23 (7*7*2) ----------------
+layer {name: "fconv7_24to23_step1" type: "Convolution" bottom: "fconv7_24+" top: "fconv7_24to23_step1" param {lr_mult: 10 decay_mult: 2} param {lr_mult: 20 decay_mult: 0}
+  convolution_param { num_output: 64 kernel_size:7 pad: 3 weight_filler {type: "gaussian" std: 0.01}  bias_filler {type: "constant" value: 0}}}
+layer {name: "relu7_24to23_step1" type: "ReLU" bottom: "fconv7_24to23_step1" top: "fconv7_24to23_step1"}
+#----step 2 
+layer {name: "fconv7_24to23_step2" type: "Convolution" bottom: "fconv7_24to23_step1" top: "fconv7_24to23_step2" param {lr_mult: 10 decay_mult: 2} param {lr_mult: 20 decay_mult: 0}
+  convolution_param { num_output: 128 kernel_size:7 pad: 3 weight_filler {type: "gaussian" std: 0.01}  bias_filler {type: "constant" value: 0}}}
+
+
+#######################################################
+#-------------- fconv7_23 -----------------
+layer {name: "fconv7_23" type: "Convolution" bottom: "fconv6_bn" top: "fconv7_23" param {lr_mult: 10 decay_mult: 1} param {lr_mult: 20 decay_mult: 0}
+  convolution_param { num_output: 128 kernel_size:1 pad: 0  weight_filler {type: "gaussian" std: 0.01} bias_filler {type: "constant" value: 0}}}
+
+#---------   collect info from 24 to 23 ----------------
+layer {name: "Pass_24to23" type: "Eltwise" bottom:"fconv7_24to23_step2" bottom:"fconv7_23" top: "fconv7_23+"}
+layer {name: "relu7_23" type: "ReLU" bottom: "fconv7_23+" top: "fconv7_23+"}
+
+#---------   pass info from: 23 to 22 (7*7*2) ----------------
+layer {name: "fconv7_23to22_step1" type: "Convolution" bottom: "fconv7_23+" top: "fconv7_23to22_step1" param {lr_mult: 10 decay_mult: 2} param {lr_mult: 20 decay_mult: 0}
+  convolution_param { num_output: 64 kernel_size:7 pad: 3 weight_filler {type: "gaussian" std: 0.01}  bias_filler {type: "constant" value: 0}}}
+layer {name: "relu7_23to22_step1" type: "ReLU" bottom: "fconv7_23to22_step1" top: "fconv7_23to22_step1"}
+#----step 2 
+layer {name: "fconv7_23to22_step2" type: "Convolution" bottom: "fconv7_23to22_step1" top: "fconv7_23to22_step2" param {lr_mult: 10 decay_mult: 2} param {lr_mult: 20 decay_mult: 0}
+  convolution_param { num_output: 128 kernel_size:7 pad: 3 weight_filler {type: "gaussian" std: 0.01}  bias_filler {type: "constant" value: 0}}}
+
+#######################################################
+#-------------- fconv7_22 -----------------
+layer {name: "fconv7_22" type: "Convolution" bottom: "fconv6_bn" top: "fconv7_22" param {lr_mult: 10 decay_mult: 1} param {lr_mult: 20 decay_mult: 0}
+  convolution_param { num_output: 128 kernel_size:1 pad: 0  weight_filler {type: "gaussian" std: 0.01} bias_filler {type: "constant" value: 0}}}
+
+#---------   collect info from 23 to 22 ----------------
+layer {name: "Pass_23to22" type: "Eltwise" bottom:"fconv7_23to22_step2" bottom:"fconv7_22" top: "fconv7_22+"}
+layer {name: "relu7_22" type: "ReLU" bottom: "fconv7_22+" top: "fconv7_22+"}
+
+#---------   pass info from: 22 to 21 (7*7*2) ----------------
+layer {name: "fconv7_22to21_step1" type: "Convolution" bottom: "fconv7_22+" top: "fconv7_22to21_step1" param {lr_mult: 10 decay_mult: 2} param {lr_mult: 20 decay_mult: 0}
+  convolution_param { num_output: 64 kernel_size:7 pad: 3 weight_filler {type: "gaussian" std: 0.01}  bias_filler {type: "constant" value: 0}}}
+layer {name: "relu7_22to21_step1" type: "ReLU" bottom: "fconv7_22to21_step1" top: "fconv7_22to21_step1"}
+#----step 2 
+layer {name: "fconv7_22to21_step2" type: "Convolution" bottom: "fconv7_22to21_step1" top: "fconv7_22to21_step2" param {lr_mult: 10 decay_mult: 2} param {lr_mult: 20 decay_mult: 0}
+  convolution_param { num_output: 128 kernel_size:7 pad: 3 weight_filler {type: "gaussian" std: 0.01}  bias_filler {type: "constant" value: 0}}}
+
+
+#######################################################
+#-------------- fconv7_21 -----------------
+layer {name: "fconv7_21" type: "Convolution" bottom: "fconv6_bn" top: "fconv7_21" param {lr_mult: 10 decay_mult: 1} param {lr_mult: 20 decay_mult: 0}
+  convolution_param { num_output: 128 kernel_size:1 pad: 0  weight_filler {type: "gaussian" std: 0.01} bias_filler {type: "constant" value: 0}}}
+
+#---------   collect info from 22 to 21 ----------------
+layer {name: "Pass_22to21" type: "Eltwise" bottom:"fconv7_22to21_step2" bottom:"fconv7_21" top: "fconv7_21+"}
+layer {name: "relu7_21" type: "ReLU" bottom: "fconv7_21+" top: "fconv7_21+"}
+
+#---------   pass info from: 21 to 20 (7*7*2) ----------------
+layer {name: "fconv7_21to20_step1" type: "Convolution" bottom: "fconv7_21+" top: "fconv7_21to20_step1" param {lr_mult: 10 decay_mult: 2} param {lr_mult: 20 decay_mult: 0}
+  convolution_param { num_output: 64 kernel_size:7 pad: 3 weight_filler {type: "gaussian" std: 0.01}  bias_filler {type: "constant" value: 0}}}
+layer {name: "relu7_21to20_step1" type: "ReLU" bottom: "fconv7_21to20_step1" top: "fconv7_21to20_step1"}
+#----step 2 
+layer {name: "fconv7_21to20_step2" type: "Convolution" bottom: "fconv7_21to20_step1" top: "fconv7_21to20_step2" param {lr_mult: 10 decay_mult: 2} param {lr_mult: 20 decay_mult: 0}
+  convolution_param { num_output: 128 kernel_size:7 pad: 3 weight_filler {type: "gaussian" std: 0.01}  bias_filler {type: "constant" value: 0}}}
+
+#######################################################
+#-------------- fconv7_20 -----------------
+layer {name: "fconv7_20" type: "Convolution" bottom: "fconv6_bn" top: "fconv7_20" param {lr_mult: 10 decay_mult: 1} param {lr_mult: 20 decay_mult: 0}
+  convolution_param { num_output: 128 kernel_size:1 pad: 0  weight_filler {type: "gaussian" std: 0.01} bias_filler {type: "constant" value: 0}}}
+
+#---------   collect info from 21 to 20 ----------------
+layer {name: "Pass_21to20" type: "Eltwise" bottom:"fconv7_21to20_step2" bottom:"fconv7_20" top: "fconv7_20+"}
+layer {name: "relu7_20" type: "ReLU" bottom: "fconv7_20+" top: "fconv7_20+"}
+
+#---------   pass info from: 20 to 15 (7*7*2) ----------------
+layer {name: "fconv7_20to15_step1" type: "Convolution" bottom: "fconv7_20+" top: "fconv7_20to15_step1" param {lr_mult: 10 decay_mult: 2} param {lr_mult: 20 decay_mult: 0}
+  convolution_param { num_output: 64 kernel_size:7 pad: 3 weight_filler {type: "gaussian" std: 0.01}  bias_filler {type: "constant" value: 0}}}
+layer {name: "relu7_20to15_step1" type: "ReLU" bottom: "fconv7_20to15_step1" top: "fconv7_20to15_step1"}
+#----step 2 
+layer {name: "fconv7_20to15_step2" type: "Convolution" bottom: "fconv7_20to15_step1" top: "fconv7_20to15_step2" param {lr_mult: 10 decay_mult: 2} param {lr_mult: 20 decay_mult: 0}
+  convolution_param { num_output: 128 kernel_size:7 pad: 3 weight_filler {type: "gaussian" std: 0.01}  bias_filler {type: "constant" value: 0}}}
+
+
+#######################################################
+#-------------- fconv7_15 -----------------
+layer {name: "fconv7_15" type: "Convolution" bottom: "fconv6_bn" top: "fconv7_15" param {lr_mult: 10 decay_mult: 1} param {lr_mult: 20 decay_mult: 0}
+  convolution_param { num_output: 128 kernel_size:1 pad: 0  weight_filler {type: "gaussian" std: 0.01} bias_filler {type: "constant" value: 0}}}
+
+#---------   collect info from 16 and 20 to 15 ----------------
+layer {name: "Pass_1620to15" type: "Eltwise" bottom:"fconv7_20to15_step2" bottom:"fconv7_16to15_step2" bottom:"fconv7_15" top: "fconv7_15+"}
+layer {name: "relu7_15" type: "ReLU" bottom: "fconv7_15+" top: "fconv7_15+"}
+
+#---------   pass info from: 15 to 14 (7*7*2) ----------------
+layer {name: "fconv7_15to2_step1" type: "Convolution" bottom: "fconv7_15+" top: "fconv7_15to2_step1" param {lr_mult: 10 decay_mult: 2} param {lr_mult: 20 decay_mult: 0}
+  convolution_param { num_output: 64 kernel_size:7 pad: 3 weight_filler {type: "gaussian" std: 0.01}  bias_filler {type: "constant" value: 0}}}
+layer {name: "relu7_15to2_step1" type: "ReLU" bottom: "fconv7_15to2_step1" top: "fconv7_15to2_step1"}
+#----step 2 
+layer {name: "fconv7_15to2_step2" type: "Convolution" bottom: "fconv7_15to2_step1" top: "fconv7_15to2_step2" param {lr_mult: 10 decay_mult: 2} param {lr_mult: 20 decay_mult: 0}
+  convolution_param { num_output: 128 kernel_size:7 pad: 3 weight_filler {type: "gaussian" std: 0.01}  bias_filler {type: "constant" value: 0}}}
+
+#######################################################
+#-------------- fconv7_2 -----------------
+layer {name: "fconv7_2" type: "Convolution" bottom: "fconv6_bn" top: "fconv7_2" param {lr_mult: 10 decay_mult: 1} param {lr_mult: 20 decay_mult: 0}
+  convolution_param { num_output: 128 kernel_size:1 pad: 0  weight_filler {type: "gaussian" std: 0.01} bias_filler {type: "constant" value: 0}}}
+
+#---------   collect info from 15 and 3 to 2 ----------------
+layer {name: "Pass_153to2" type: "Eltwise" bottom:"fconv7_15to2_step2" bottom:"fconv7_3to2_step2" bottom:"fconv7_2" top: "fconv7_2+"}
+layer {name: "relu7_2" type: "ReLU" bottom: "fconv7_2+" top: "fconv7_2+"}
+
+#---------   pass info from: 2 to 1 (7*7*2) ----------------
+layer {name: "fconv7_2to1_step1" type: "Convolution" bottom: "fconv7_2+" top: "fconv7_2to1_step1" param {lr_mult: 10 decay_mult: 2} param {lr_mult: 20 decay_mult: 0}
+  convolution_param { num_output: 64 kernel_size:7 pad: 3 weight_filler {type: "gaussian" std: 0.01}  bias_filler {type: "constant" value: 0}}}
+layer {name: "relu7_2to1_step1" type: "ReLU" bottom: "fconv7_2to1_step1" top: "fconv7_2to1_step1"}
+#----step 2 
+layer {name: "fconv7_2to1_step2" type: "Convolution" bottom: "fconv7_2to1_step1" top: "fconv7_2to1_step2" param {lr_mult: 10 decay_mult: 2} param {lr_mult: 20 decay_mult: 0}
+  convolution_param { num_output: 128 kernel_size:7 pad: 3 weight_filler {type: "gaussian" std: 0.01}  bias_filler {type: "constant" value: 0}}}
+
+
+#######################################################
+#-------------- fconv7_1 -----------------
+layer {name: "fconv7_1" type: "Convolution" bottom: "fconv6_bn" top: "fconv7_1" param {lr_mult: 10 decay_mult: 1} param {lr_mult: 20 decay_mult: 0}
+  convolution_param { num_output: 128 kernel_size:1 pad: 0 weight_filler {type: "gaussian" std: 0.01} bias_filler {type: "constant" value: 0}}}
+
+#---------   collect info from 2 to 1 ----------------
+layer {name: "Pass_2to1" type: "Eltwise" bottom:"fconv7_2to1_step2" bottom:"fconv7_1" top: "fconv7_1+"}
+
+layer {name: "relu7_1" type: "ReLU" bottom: "fconv7_1+" top: "fconv7_1+"}
+
+
+
+
+
+
+
+
+
+
+
+
+##################################################################################
+#----------------------  seperated layers revert ---------------------------------
+##################################################################################
+
+##################################################################################
+#----------------------  seperated layers revert ---------------------------------
+##################################################################################
+
+##################################################################################
+#----------------------  seperated layers revert ---------------------------------
+##################################################################################
+
+##################################################################################
+#----------------------  seperated layers revert ---------------------------------
+##################################################################################
+
+##################################################################################
+#----------------------  seperated layers revert ---------------------------------
+##################################################################################
+##################################################################################
+#----------------------  seperated layers revert ---------------------------------
+##################################################################################
+
+#######################################################
+#-------------- fconv7_1 -----------------
+layer {name: "fconvb27_1" type: "Convolution" bottom: "fconv6_bn" top: "fconvb27_1" param {lr_mult: 10 decay_mult: 1} param {lr_mult: 20 decay_mult: 0}
+  convolution_param { num_output: 128 kernel_size:1 pad: 0 weight_filler {type: "gaussian" std: 0.01} bias_filler {type: "constant" value: 0}}}
+layer {name: "relub27_1" type: "ReLU" bottom: "fconvb27_1" top: "fconvb27_1+"}
+
+
+#---------   pass info from: 1 to 2 (9*9*2) ----------------
+layer {name: "fconvb27_1to2_step1" type: "Convolution" bottom: "fconvb27_1+" top: "fconvb27_1to2_step1" param {lr_mult: 10 decay_mult: 2} param {lr_mult: 20 decay_mult: 0}
+  convolution_param { num_output: 64 kernel_size:7 pad: 3 weight_filler {type: "gaussian" std: 0.01}  bias_filler {type: "constant" value: 0}}}
+layer {name: "relub27_1to2_step1" type: "ReLU" bottom: "fconvb27_1to2_step1" top: "fconvb27_1to2_step1"}
+#---- step 2 ------
+layer {name: "fconvb27_1to2_step2" type: "Convolution" bottom: "fconvb27_1to2_step1" top: "fconvb27_1to2_step2" param {lr_mult: 10 decay_mult: 2} param {lr_mult: 20 decay_mult: 0}
+  convolution_param { num_output: 128 kernel_size:7 pad: 3 weight_filler {type: "gaussian" std: 0.01}  bias_filler {type: "constant" value: 0}}}
+
+
+#######################################################
+#-------------- fconv7_2 -----------------
+layer {name: "fconvb27_2" type: "Convolution" bottom: "fconv6_bn" top: "fconvb27_2" param {lr_mult: 10 decay_mult: 1} param {lr_mult: 20 decay_mult: 0}
+  convolution_param { num_output: 128 kernel_size:1 pad: 0  weight_filler {type: "gaussian" std: 0.01} bias_filler {type: "constant" value: 0}}}
+
+#---------   collect info from 1 and 2 ----------------
+layer {name: "Pass_b2_1to2" type: "Eltwise" bottom:"fconvb27_1to2_step2" bottom:"fconvb27_2" top: "fconvb27_2+"}
+layer {name: "relub27_2" type: "ReLU" bottom: "fconvb27_2+" top: "fconvb27_2+"}
+
+#---------   pass info from: 2 to 3 (7*7*2) ----------------
+layer {name: "fconvb27_2to3_step1" type: "Convolution" bottom: "fconvb27_2+" top: "fconvb27_2to3_step1" param {lr_mult: 10 decay_mult: 2} param {lr_mult: 20 decay_mult: 0}
+  convolution_param { num_output: 64 kernel_size:7 pad: 3 weight_filler {type: "gaussian" std: 0.01}  bias_filler {type: "constant" value: 0}}}
+layer {name: "relub27_2to3_step1" type: "ReLU" bottom: "fconvb27_2to3_step1" top: "fconvb27_2to3_step1"}
+#----step 2 
+layer {name: "fconvb27_2to3_step2" type: "Convolution" bottom: "fconvb27_2to3_step1" top: "fconvb27_2to3_step2" param {lr_mult: 10 decay_mult: 2} param {lr_mult: 20 decay_mult: 0}
+  convolution_param { num_output: 128 kernel_size:7 pad: 3 weight_filler {type: "gaussian" std: 0.01}  bias_filler {type: "constant" value: 0}}}
+
+#---------   pass info from: 2 to 15 (7*7*2) ----------------
+layer {name: "fconvb27_2to15_step1" type: "Convolution" bottom: "fconvb27_2+" top: "fconvb27_2to15_step1" param {lr_mult: 10 decay_mult: 2} param {lr_mult: 20 decay_mult: 0}
+  convolution_param { num_output: 64 kernel_size:7 pad: 3 weight_filler {type: "gaussian" std: 0.01}  bias_filler {type: "constant" value: 0}}}
+layer {name: "relub27_2to15_step1" type: "ReLU" bottom: "fconvb27_2to15_step1" top: "fconvb27_2to15_step1"}
+#----step 2 
+layer {name: "fconvb27_2to15_step2" type: "Convolution" bottom: "fconvb27_2to15_step1" top: "fconvb27_2to15_step2" param {lr_mult: 10 decay_mult: 2} param {lr_mult: 20 decay_mult: 0}
+  convolution_param { num_output: 128 kernel_size:7 pad: 3 weight_filler {type: "gaussian" std: 0.01}  bias_filler {type: "constant" value: 0}}}
+
+
+
+#######################################################
+#-------------- fconv7_3 -----------------
+layer {name: "fconvb27_3" type: "Convolution" bottom: "fconv6_bn" top: "fconvb27_3" param {lr_mult: 10 decay_mult: 1} param {lr_mult: 20 decay_mult: 0}
+  convolution_param { num_output: 128 kernel_size:1 pad: 0  weight_filler {type: "gaussian" std: 0.01} bias_filler {type: "constant" value: 0}}}
+
+#---------   collect info from 2 to 3 ----------------
+layer {name: "Pass_b2_2to3" type: "Eltwise"  bottom:"fconvb27_2to3_step2" bottom:"fconvb27_3" top: "fconvb27_3+"}
+layer {name: "relub27_3" type: "ReLU" bottom: "fconvb27_3+" top: "fconvb27_3+"}
+
+#---------   pass info from: 3 to 4 (9*9*2) ----------------
+layer {name: "fconvb27_3to4_step1" type: "Convolution" bottom: "fconvb27_3+" top: "fconvb27_3to4_step1" param {lr_mult: 10 decay_mult: 2} param {lr_mult: 20 decay_mult: 0}
+  convolution_param { num_output: 64 kernel_size:7 pad: 3 weight_filler {type: "gaussian" std: 0.01}  bias_filler {type: "constant" value: 0}}}
+layer {name: "relub27_3to4_step1" type: "ReLU" bottom: "fconvb27_3to4_step1" top: "fconvb27_3to4_step1"}
+#----step 2 
+layer {name: "fconvb27_3to4_step2" type: "Convolution" bottom: "fconvb27_3to4_step1" top: "fconvb27_3to4_step2" param {lr_mult: 10 decay_mult: 2} param {lr_mult: 20 decay_mult: 0}
+  convolution_param { num_output: 128 kernel_size:7 pad: 3 weight_filler {type: "gaussian" std: 0.01}  bias_filler {type: "constant" value: 0}}}
+
+#---------   pass info from: 3 to 8 (9*9*2) ----------------
+layer {name: "fconvb27_3to8_step1" type: "Convolution" bottom: "fconvb27_3+" top: "fconvb27_3to8_step1" param {lr_mult: 10 decay_mult: 2} param {lr_mult: 20 decay_mult: 0}
+  convolution_param { num_output: 64 kernel_size:7 pad: 3 weight_filler {type: "gaussian" std: 0.01}  bias_filler {type: "constant" value: 0}}}
+layer {name: "relub27_3to8_step1" type: "ReLU" bottom: "fconvb27_3to8_step1" top: "fconvb27_3to8_step1"}
+#----step 2 
+layer {name: "fconvb27_3to8_step2" type: "Convolution" bottom: "fconvb27_3to8_step1" top: "fconvb27_3to8_step2" param {lr_mult: 10 decay_mult: 2} param {lr_mult: 20 decay_mult: 0}
+  convolution_param { num_output: 128 kernel_size:7 pad: 3 weight_filler {type: "gaussian" std: 0.01}  bias_filler {type: "constant" value: 0}}}
+
+
+#######################################################
+#-------------- fconv7_4 -----------------
+layer {name: "fconvb27_4" type: "Convolution" bottom: "fconv6_bn" top: "fconvb27_4"  param {lr_mult: 10 decay_mult: 1}  param {lr_mult: 20 decay_mult: 0}
+  convolution_param { num_output: 128 kernel_size:1 pad: 0   weight_filler {type: "gaussian" std: 0.01}  bias_filler {type: "constant" value: 0}}}
+
+#---------   collect info from 3 to 4 ----------------
+layer {name: "Pass_b2_3to4" type: "Eltwise" bottom:"fconvb27_3to4_step2" bottom:"fconvb27_4" top: "fconvb27_4+"}
+layer {name: "relub27_4" type: "ReLU" bottom: "fconvb27_4+" top: "fconvb27_4+"}
+
+#---------   pass info from: 4 to 5 (9*9*2) ----------------
+layer {name: "fconvb27_4to5_step1" type: "Convolution" bottom: "fconvb27_4+" top: "fconvb27_4to5_step1" param {lr_mult: 10 decay_mult: 2} param {lr_mult: 20 decay_mult: 0}
+  convolution_param { num_output: 64 kernel_size:7 pad: 3 weight_filler {type: "gaussian" std: 0.01}  bias_filler {type: "constant" value: 0}}}
+layer {name: "relub27_4to5_step1" type: "ReLU" bottom: "fconvb27_4to5_step1" top: "fconvb27_4to5_step1"}
+#----step 2 
+layer {name: "fconvb27_4to5_step2" type: "Convolution" bottom: "fconvb27_4to5_step1" top: "fconvb27_4to5_step2" param {lr_mult: 10 decay_mult: 2} param {lr_mult: 20 decay_mult: 0}
+  convolution_param { num_output: 128 kernel_size:7 pad: 3 weight_filler {type: "gaussian" std: 0.01}  bias_filler {type: "constant" value: 0}}}
+
+
+#######################################################
+#-------------- fconv7_5 -----------------
+layer {name: "fconvb27_5" type: "Convolution" bottom: "fconv6_bn" top: "fconvb27_5" param {lr_mult: 10 decay_mult: 1} param {lr_mult: 20 decay_mult: 0}
+  convolution_param { num_output: 128 kernel_size:1 pad: 0  weight_filler {type: "gaussian" std: 0.01} bias_filler {type: "constant" value: 0}}}
+
+#---------   collect info from: point 4 ----------------
+layer {name: "Pass_b2_4to5" type: "Eltwise" bottom:"fconvb27_4to5_step2" bottom:"fconvb27_5" top: "fconvb27_5+"}
+layer {name: "relub27_5" type: "ReLU" bottom: "fconvb27_5+" top: "fconvb27_5+"}
+
+#---------   pass info from: 5 to 6 (9*9*2) ----------------
+layer {name: "fconvb27_5to6_step1" type: "Convolution" bottom: "fconvb27_5+" top: "fconvb27_5to6_step1" param {lr_mult: 10 decay_mult: 2} param {lr_mult: 20 decay_mult: 0}
+  convolution_param { num_output: 64 kernel_size:7 pad: 3 weight_filler {type: "gaussian" std: 0.01}  bias_filler {type: "constant" value: 0}}}
+layer {name: "relub27_5to4_step1" type: "ReLU" bottom: "fconvb27_5to6_step1" top: "fconvb27_5to6_step1"}
+#----step 2 
+layer {name: "fconvb27_5to6_step2" type: "Convolution" bottom: "fconvb27_5to6_step1" top: "fconvb27_5to6_step2" param {lr_mult: 10 decay_mult: 2} param {lr_mult: 20 decay_mult: 0}
+  convolution_param { num_output: 128 kernel_size:7 pad: 3 weight_filler {type: "gaussian" std: 0.01}  bias_filler {type: "constant" value: 0}}}
+
+
+##################################################
+#-------------- fconv7_6 -----------------
+layer {name: "fconvb27_6" type: "Convolution" bottom: "fconv6_bn" top: "fconvb27_6" param {lr_mult: 10 decay_mult: 1} param {lr_mult: 20 decay_mult: 0}
+  convolution_param { num_output: 128 kernel_size:1 pad: 0 weight_filler {type: "gaussian" std: 0.01} bias_filler {type: "constant" value: 0}}}
+#------------------ add info comed from 5----------------------------
+layer {name: "Pass_b2_5to6" type: "Eltwise" bottom:"fconvb27_5to6_step2" bottom:"fconvb27_6" top: "fconvb27_6+"}
+layer {name: "relub27_6" type: "ReLU" bottom: "fconvb27_6+" top: "fconvb27_6+"}
+
+#---------   pass info from: 6 to 7 (9*9*2) ----------------
+layer {name: "fconvb27_6to7_step1" type: "Convolution" bottom: "fconvb27_6+" top: "fconvb27_6to7_step1" param {lr_mult: 10 decay_mult: 2} param {lr_mult: 20 decay_mult: 0}
+  convolution_param { num_output: 64 kernel_size:7 pad: 3 weight_filler {type: "gaussian" std: 0.01}  bias_filler {type: "constant" value: 0}}}
+layer {name: "relub27_6to7_step1" type: "ReLU" bottom: "fconvb27_6to7_step1" top: "fconvb27_6to7_step1"}
+#----step 2 
+layer {name: "fconvb27_6to7_step2" type: "Convolution" bottom: "fconvb27_6to7_step1" top: "fconvb27_6to7_step2" param {lr_mult: 10 decay_mult: 2} param {lr_mult: 20 decay_mult: 0}
+  convolution_param { num_output: 128 kernel_size:7 pad: 3 weight_filler {type: "gaussian" std: 0.01}  bias_filler {type: "constant" value: 0}}}
+
+#######################################################
+#-------------- fconv7_7 -----------------
+layer {name: "fconvb27_7" type: "Convolution" bottom: "fconv6_bn" top: "fconvb27_7" param {lr_mult: 10 decay_mult: 1} param {lr_mult: 20 decay_mult: 0}
+  convolution_param { num_output: 128 kernel_size:1 pad: 0 weight_filler {type: "gaussian" std: 0.01} bias_filler {type: "constant" value: 0}}}
+#------------------ add info comed from 6----------------------------
+layer {name: "Pass_b2_6to7" type: "Eltwise" bottom:"fconvb27_6to7_step2" bottom:"fconvb27_7" top: "fconvb27_7+"}
+layer {name: "relub27_7" type: "ReLU" bottom: "fconvb27_7+" top: "fconvb27_7+"}
+
+
+
+
+
+
+
+
+
+
+
+#######################################################
+#-------------- fconv7_8 -----------------
+layer {name: "fconvb27_8" type: "Convolution" bottom: "fconv6_bn" top: "fconvb27_8" param {lr_mult: 10 decay_mult: 1} param {lr_mult: 20 decay_mult: 0}
+  convolution_param { num_output: 128 kernel_size:1 pad: 0  weight_filler {type: "gaussian" std: 0.01} bias_filler {type: "constant" value: 0}}}
+#---------   collect info from 3 to 8 ----------------
+layer {name: "Pass_b2_3to8" type: "Eltwise" bottom:"fconvb27_3to8_step2" bottom:"fconvb27_8" top: "fconvb27_8+"}
+layer {name: "relub27_8" type: "ReLU" bottom: "fconvb27_8+" top: "fconvb27_8+"}
+
+#---------   pass info from: 8 to 9 (9*9*2) ----------------
+layer {name: "fconvb27_8to9_step1" type: "Convolution" bottom: "fconvb27_8+" top: "fconvb27_8to9_step1" param {lr_mult: 10 decay_mult: 2} param {lr_mult: 20 decay_mult: 0}
+  convolution_param { num_output: 64 kernel_size:7 pad: 3 weight_filler {type: "gaussian" std: 0.01}  bias_filler {type: "constant" value: 0}}}
+layer {name: "relub27_8to9_step1" type: "ReLU" bottom: "fconvb27_8to9_step1" top: "fconvb27_8to9_step1"}
+#----step 2 
+layer {name: "fconvb27_8to9_step2" type: "Convolution" bottom: "fconvb27_8to9_step1" top: "fconvb27_8to9_step2" param {lr_mult: 10 decay_mult: 2} param {lr_mult: 20 decay_mult: 0}
+  convolution_param { num_output: 128 kernel_size:7 pad: 3 weight_filler {type: "gaussian" std: 0.01}  bias_filler {type: "constant" value: 0}}}
+
+#######################################################
+#-------------- fconv7_9 -----------------
+layer {name: "fconvb27_9" type: "Convolution" bottom: "fconv6_bn" top: "fconvb27_9" param {lr_mult: 10 decay_mult: 1} param {lr_mult: 20 decay_mult: 0}
+  convolution_param { num_output: 128 kernel_size:1 pad: 0  weight_filler {type: "gaussian" std: 0.01} bias_filler {type: "constant" value: 0}}}
+
+#---------   collect info from 8 to 9 ----------------
+layer {name: "Pass_b2_8to9" type: "Eltwise" bottom:"fconvb27_8to9_step2" bottom:"fconvb27_9" top: "fconvb27_9+"}
+layer {name: "relub27_9" type: "ReLU" bottom: "fconvb27_9+" top: "fconvb27_9+"}
+
+#---------   pass info from: 9 to 10 (9*9*2) ----------------
+layer {name: "fconvb27_9to10_step1" type: "Convolution" bottom: "fconvb27_9+" top: "fconvb27_9to10_step1" param {lr_mult: 10 decay_mult: 2} param {lr_mult: 20 decay_mult: 0}
+  convolution_param { num_output: 64 kernel_size:7 pad: 3 weight_filler {type: "gaussian" std: 0.01}  bias_filler {type: "constant" value: 0}}}
+layer {name: "relub27_9to10_step1" type: "ReLU" bottom: "fconvb27_9to10_step1" top: "fconvb27_9to10_step1"}
+#----step 2 
+layer {name: "fconvb27_9to10_step2" type: "Convolution" bottom: "fconvb27_9to10_step1" top: "fconvb27_9to10_step2" param {lr_mult: 10 decay_mult: 2} param {lr_mult: 20 decay_mult: 0}
+  convolution_param { num_output: 128 kernel_size:7 pad: 3 weight_filler {type: "gaussian" std: 0.01}  bias_filler {type: "constant" value: 0}}}
+
+#######################################################
+#-------------- fconv7_10 -----------------
+layer {name: "fconvb27_10" type: "Convolution" bottom: "fconv6_bn" top: "fconvb27_10" param {lr_mult: 10 decay_mult: 1} param {lr_mult: 20 decay_mult: 0}
+  convolution_param { num_output: 128 kernel_size:1 pad: 0  weight_filler {type: "gaussian" std: 0.01} bias_filler {type: "constant" value: 0}}}
+
+#---------   collect info from 9 to 10 ----------------
+layer {name: "Pass_b2_9to10" type: "Eltwise" bottom:"fconvb27_9to10_step2" bottom:"fconvb27_10" top: "fconvb27_10+"}
+layer {name: "relub27_10" type: "ReLU" bottom: "fconvb27_10+" top: "fconvb27_10+"}
+
+
+#---------   pass info from: 10 to 11 (9*9*2) ----------------
+layer {name: "fconvb27_10to11_step1" type: "Convolution" bottom: "fconvb27_10+" top: "fconvb27_10to11_step1" param {lr_mult: 10 decay_mult: 2} param {lr_mult: 20 decay_mult: 0}
+  convolution_param { num_output: 64 kernel_size:7 pad: 3 weight_filler {type: "gaussian" std: 0.01}  bias_filler {type: "constant" value: 0}}}
+layer {name: "relub27_10to9_step1" type: "ReLU" bottom: "fconvb27_10to11_step1" top: "fconvb27_10to11_step1"}
+#----step 2 
+layer {name: "fconvb27_10to11_step2" type: "Convolution" bottom: "fconvb27_10to11_step1" top: "fconvb27_10to11_step2" param {lr_mult: 10 decay_mult: 2} param {lr_mult: 20 decay_mult: 0}
+  convolution_param { num_output: 128 kernel_size:7 pad: 3 weight_filler {type: "gaussian" std: 0.01}  bias_filler {type: "constant" value: 0}}}
+
+#######################################################
+#-------------- fconv7_11 -----------------
+layer {name: "fconvb27_11" type: "Convolution" bottom: "fconv6_bn" top: "fconvb27_11" param {lr_mult: 10 decay_mult: 1} param {lr_mult: 20 decay_mult: 0}
+  convolution_param { num_output: 128 kernel_size:1 pad: 0  weight_filler {type: "gaussian" std: 0.01} bias_filler {type: "constant" value: 0}}}
+#---------   collect info from 12 to 11 ----------------
+layer {name: "Pass_b2_12to11" type: "Eltwise" bottom:"fconvb27_10to11_step2" bottom:"fconvb27_11" top: "fconvb27_11+"}
+layer {name: "relub27_11" type: "ReLU" bottom: "fconvb27_11+" top: "fconvb27_11+"}
+
+#---------   pass info from: 11 to 12(7*7*2) ----------------
+layer {name: "fconvb27_11to12_step1" type: "Convolution" bottom: "fconvb27_11+" top: "fconvb27_11to12_step1" param {lr_mult: 10 decay_mult: 2} param {lr_mult: 20 decay_mult: 0}
+  convolution_param { num_output: 64 kernel_size:7 pad: 3 weight_filler {type: "gaussian" std: 0.01}  bias_filler {type: "constant" value: 0}}}
+layer {name: "relub27_11to12_step1" type: "ReLU" bottom: "fconvb27_11to12_step1" top: "fconvb27_11to12_step1"}
+#----step 2 
+layer {name: "fconvb27_11to12_step2" type: "Convolution" bottom: "fconvb27_11to12_step1" top: "fconvb27_11to12_step2" param {lr_mult: 10 decay_mult: 2} param {lr_mult: 20 decay_mult: 0}
+  convolution_param { num_output: 128 kernel_size:7 pad: 3 weight_filler {type: "gaussian" std: 0.01}  bias_filler {type: "constant" value: 0}}}
+
+#######################################################
+#-------------- fconv7_12 -----------------
+layer {name: "fconvb27_12" type: "Convolution" bottom: "fconv6_bn" top: "fconvb27_12" param {lr_mult: 10 decay_mult: 1} param {lr_mult: 20 decay_mult: 0}
+  convolution_param { num_output: 128 kernel_size:1 pad: 0  weight_filler {type: "gaussian" std: 0.01} bias_filler {type: "constant" value: 0}}}
+
+#---------   collect info from 11 to 12 ----------------
+layer {name: "Pass_b2_11to12" type: "Eltwise" bottom:"fconvb27_11to12_step2" bottom:"fconvb27_12" top: "fconvb27_12+"}
+layer {name: "relub27_12" type: "ReLU" bottom: "fconvb27_12+" top: "fconvb27_12+"}
+
+#---------   pass info from: 12 to 13 (7*7*2) ----------------
+layer {name: "fconvb27_12to13_step1" type: "Convolution" bottom: "fconvb27_12+" top: "fconvb27_12to13_step1" param {lr_mult: 10 decay_mult: 2} param {lr_mult: 20 decay_mult: 0}
+  convolution_param { num_output: 64 kernel_size:7 pad: 3 weight_filler {type: "gaussian" std: 0.01}  bias_filler {type: "constant" value: 0}}}
+layer {name: "relub27_12to13_step1" type: "ReLU" bottom: "fconvb27_12to13_step1" top: "fconvb27_12to13_step1"}
+#----step 2 
+layer {name: "fconvb27_12to13_step2" type: "Convolution" bottom: "fconvb27_12to13_step1" top: "fconvb27_12to13_step2" param {lr_mult: 10 decay_mult: 2} param {lr_mult: 20 decay_mult: 0}
+  convolution_param { num_output: 128 kernel_size:7 pad: 3 weight_filler {type: "gaussian" std: 0.01}  bias_filler {type: "constant" value: 0}}}
+
+#######################################################
+#-------------- fconv7_13 -----------------
+layer {name: "fconvb27_13" type: "Convolution" bottom: "fconv6_bn" top: "fconvb27_13" param {lr_mult: 10 decay_mult: 1} param {lr_mult: 20 decay_mult: 0}
+  convolution_param { num_output: 128 kernel_size:1 pad: 0  weight_filler {type: "gaussian" std: 0.01} bias_filler {type: "constant" value: 0}}}
+#---------   collect info from 12 to 13 ----------------
+layer {name: "Pass_b2_12to13" type: "Eltwise" bottom:"fconvb27_12to13_step2" bottom:"fconvb27_13" top: "fconvb27_13+"}
+layer {name: "relub27_13" type: "ReLU" bottom: "fconvb27_13+" top: "fconvb27_13+"}
+
+#---------   pass info from: 13 to 14 (7*7*2) ----------------
+layer {name: "fconvb27_13to14_step1" type: "Convolution" bottom: "fconvb27_13+" top: "fconvb27_13to14_step1" param {lr_mult: 10 decay_mult: 2} param {lr_mult: 20 decay_mult: 0}
+  convolution_param { num_output: 64 kernel_size:7 pad: 3 weight_filler {type: "gaussian" std: 0.01}  bias_filler {type: "constant" value: 0}}}
+layer {name: "relub27_13to14_step1" type: "ReLU" bottom: "fconvb27_13to14_step1" top: "fconvb27_13to14_step1"}
+#----step 2 
+layer {name: "fconvb27_13to14_step2" type: "Convolution" bottom: "fconvb27_13to14_step1" top: "fconvb27_13to14_step2" param {lr_mult: 10 decay_mult: 2} param {lr_mult: 20 decay_mult: 0}
+  convolution_param { num_output: 128 kernel_size:7 pad: 3 weight_filler {type: "gaussian" std: 0.01}  bias_filler {type: "constant" value: 0}}}
+
+#######################################################
+#-------------- fconv7_14 -----------------
+layer {name: "fconvb27_14" type: "Convolution" bottom: "fconv6_bn" top: "fconvb27_14" param {lr_mult: 10 decay_mult: 1} param {lr_mult: 20 decay_mult: 0}
+  convolution_param { num_output: 128 kernel_size:1 pad: 0  weight_filler {type: "gaussian" std: 0.01} bias_filler {type: "constant" value: 0}}}
+  #---------   collect info from 13 to 14 ----------------
+layer {name: "Pass_b2_13to14" type: "Eltwise" bottom:"fconvb27_13to14_step2" bottom:"fconvb27_14" top: "fconvb27_14+"}
+layer {name: "relub27_14" type: "ReLU" bottom: "fconvb27_14+" top: "fconvb27_14+"}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#######################################################
+#-------------- fconv7_15 -----------------
+layer {name: "fconvb27_15" type: "Convolution" bottom: "fconv6_bn" top: "fconvb27_15" param {lr_mult: 10 decay_mult: 1} param {lr_mult: 20 decay_mult: 0}
+  convolution_param { num_output: 128 kernel_size:1 pad: 0  weight_filler {type: "gaussian" std: 0.01} bias_filler {type: "constant" value: 0}}}
+
+#---------   collect info from 2 to 15 ----------------
+layer {name: "Pass_b2_2to15" type: "Eltwise" bottom:"fconvb27_2to15_step2" bottom:"fconvb27_15" top: "fconvb27_15+"}
+layer {name: "relub27_15" type: "ReLU" bottom: "fconvb27_15+" top: "fconvb27_15+"}
+
+#---------   pass info from: 15 to 16 (7*7*2) ----------------
+layer {name: "fconvb27_15to16_step1" type: "Convolution" bottom: "fconvb27_15+" top: "fconvb27_15to16_step1" param {lr_mult: 10 decay_mult: 2} param {lr_mult: 20 decay_mult: 0}
+  convolution_param { num_output: 64 kernel_size:7 pad: 3 weight_filler {type: "gaussian" std: 0.01}  bias_filler {type: "constant" value: 0}}}
+layer {name: "relub27_15to16_step1" type: "ReLU" bottom: "fconvb27_15to16_step1" top: "fconvb27_15to16_step1"}
+#----step 2 
+layer {name: "fconvb27_15to16_step2" type: "Convolution" bottom: "fconvb27_15to16_step1" top: "fconvb27_15to16_step2" param {lr_mult: 10 decay_mult: 2} param {lr_mult: 20 decay_mult: 0}
+  convolution_param { num_output: 128 kernel_size:7 pad: 3 weight_filler {type: "gaussian" std: 0.01}  bias_filler {type: "constant" value: 0}}}
+#---------   pass info from: 15 to 20 (7*7*2) ----------------
+layer {name: "fconvb27_15to20_step1" type: "Convolution" bottom: "fconvb27_15+" top: "fconvb27_15to20_step1" param {lr_mult: 10 decay_mult: 2} param {lr_mult: 20 decay_mult: 0}
+  convolution_param { num_output: 64 kernel_size:7 pad: 3 weight_filler {type: "gaussian" std: 0.01}  bias_filler {type: "constant" value: 0}}}
+layer {name: "relub27_15to20_step1" type: "ReLU" bottom: "fconvb27_15to20_step1" top: "fconvb27_15to20_step1"}
+#----step 2 
+layer {name: "fconvb27_15to20_step2" type: "Convolution" bottom: "fconvb27_15to20_step1" top: "fconvb27_15to20_step2" param {lr_mult: 10 decay_mult: 2} param {lr_mult: 20 decay_mult: 0}
+  convolution_param { num_output: 128 kernel_size:7 pad: 3 weight_filler {type: "gaussian" std: 0.01}  bias_filler {type: "constant" value: 0}}}
+
+#######################################################
+#-------------- fconv7_16 -----------------
+layer {name: "fconvb27_16" type: "Convolution" bottom: "fconv6_bn" top: "fconvb27_16" param {lr_mult: 10 decay_mult: 1} param {lr_mult: 20 decay_mult: 0}
+  convolution_param { num_output: 128 kernel_size:1 pad: 0  weight_filler {type: "gaussian" std: 0.01} bias_filler {type: "constant" value: 0}}}
+
+#---------   collect info from 15 to 16 ----------------
+layer {name: "Pass_b2_15to16" type: "Eltwise" bottom:"fconvb27_15to16_step2" bottom:"fconvb27_16" top: "fconvb27_16+"}
+layer {name: "relub27_16" type: "ReLU" bottom: "fconvb27_16+" top: "fconvb27_16+"}
+
+#---------   pass info from: 16 to 17 (9*9*2) ----------------
+layer {name: "fconvb27_16to17_step1" type: "Convolution" bottom: "fconvb27_16+" top: "fconvb27_16to17_step1" param {lr_mult: 10 decay_mult: 2} param {lr_mult: 20 decay_mult: 0}
+  convolution_param { num_output: 64 kernel_size:7 pad: 3 weight_filler {type: "gaussian" std: 0.01}  bias_filler {type: "constant" value: 0}}}
+layer {name: "relub27_16to17_step1" type: "ReLU" bottom: "fconvb27_16to17_step1" top: "fconvb27_16to17_step1"}
+#----step 2 
+layer {name: "fconvb27_16to17_step2" type: "Convolution" bottom: "fconvb27_16to17_step1" top: "fconvb27_16to17_step2" param {lr_mult: 10 decay_mult: 2} param {lr_mult: 20 decay_mult: 0}
+  convolution_param { num_output: 128 kernel_size:7 pad: 3 weight_filler {type: "gaussian" std: 0.01}  bias_filler {type: "constant" value: 0}}}
+
+#######################################################
+#-------------- fconv7_17 -----------------
+layer {name: "fconvb27_17" type: "Convolution" bottom: "fconv6_bn" top: "fconvb27_17" param {lr_mult: 10 decay_mult: 1} param {lr_mult: 20 decay_mult: 0}
+  convolution_param { num_output: 128 kernel_size:1 pad: 0 weight_filler {type: "gaussian" std: 0.01} bias_filler {type: "constant" value: 0}}}
+
+#---------   collect info from 16 to 17 ----------------
+layer {name: "Pass_b2_16to17" type: "Eltwise" bottom:"fconvb27_16to17_step2" bottom:"fconvb27_17" top: "fconvb27_17+"}
+layer {name: "relub27_17" type: "ReLU" bottom: "fconvb27_17+" top: "fconvb27_17+"}
+
+#---------   pass info from: 17 to 18 (7*7*2) ----------------
+layer {name: "fconvb27_17to18_step1" type: "Convolution" bottom: "fconvb27_17+" top: "fconvb27_17to18_step1" param {lr_mult: 10 decay_mult: 2} param {lr_mult: 20 decay_mult: 0}
+  convolution_param { num_output: 64 kernel_size:7 pad: 3 weight_filler {type: "gaussian" std: 0.01}  bias_filler {type: "constant" value: 0}}}
+layer {name: "relub27_17to18_step1" type: "ReLU" bottom: "fconvb27_17to18_step1" top: "fconvb27_17to18_step1"}
+#----step 2 
+layer {name: "fconvb27_17to18_step2" type: "Convolution" bottom: "fconvb27_17to18_step1" top: "fconvb27_17to18_step2" param {lr_mult: 10 decay_mult: 2} param {lr_mult: 20 decay_mult: 0}
+  convolution_param { num_output: 128 kernel_size:7 pad: 3 weight_filler {type: "gaussian" std: 0.01}  bias_filler {type: "constant" value: 0}}}
+
+#######################################################
+#-------------- fconv7_18 -----------------
+layer {name: "fconvb27_18" type: "Convolution" bottom: "fconv6_bn" top: "fconvb27_18" param {lr_mult: 10 decay_mult: 1} param {lr_mult: 20 decay_mult: 0}
+  convolution_param { num_output: 128 kernel_size:1 pad: 0  weight_filler {type: "gaussian" std: 0.01} bias_filler {type: "constant" value: 0}}}
+
+#---------   collect info from 17 to 18 ----------------
+layer {name: "Pass_b2_17to18" type: "Eltwise" bottom:"fconvb27_17to18_step2" bottom:"fconvb27_18" top: "fconvb27_18+"}
+layer {name: "relub27_18" type: "ReLU" bottom: "fconvb27_18+" top: "fconvb27_18+"}
+
+#---------   pass info from: 18 to 19 (7*7*2) ----------------
+layer {name: "fconvb27_18to19_step1" type: "Convolution" bottom: "fconvb27_18+" top: "fconvb27_18to19_step1" param {lr_mult: 10 decay_mult: 2} param {lr_mult: 20 decay_mult: 0}
+  convolution_param { num_output: 64 kernel_size:7 pad: 3 weight_filler {type: "gaussian" std: 0.01}  bias_filler {type: "constant" value: 0}}}
+layer {name: "relub27_18to19_step1" type: "ReLU" bottom: "fconvb27_18to19_step1" top: "fconvb27_18to19_step1"}
+#----step 2 
+layer {name: "fconvb27_18to19_step2" type: "Convolution" bottom: "fconvb27_18to19_step1" top: "fconvb27_18to19_step2" param {lr_mult: 10 decay_mult: 2} param {lr_mult: 20 decay_mult: 0}
+  convolution_param { num_output: 128 kernel_size:7 pad: 3 weight_filler {type: "gaussian" std: 0.01}  bias_filler {type: "constant" value: 0}}}
+
+#######################################################
+#-------------- fconv7_19 -----------------
+layer {name: "fconvb27_19" type: "Convolution" bottom: "fconv6_bn" top: "fconvb27_19" param {lr_mult: 10 decay_mult: 1} param {lr_mult: 20 decay_mult: 0}
+  convolution_param { num_output: 128 kernel_size:1 pad: 0  weight_filler {type: "gaussian" std: 0.01} bias_filler {type: "constant" value: 0}}}
+#---------   collect info from 18 to 19 ----------------
+layer {name: "Pass_b2_18to19" type: "Eltwise" bottom:"fconvb27_18to19_step2" bottom:"fconvb27_19" top: "fconvb27_19+"}
+layer {name: "relub27_19" type: "ReLU" bottom: "fconvb27_19+" top: "fconvb27_19+"}
+
+#######################################################
+#-------------- fconv7_20 -----------------
+layer {name: "fconvb27_20" type: "Convolution" bottom: "fconv6_bn" top: "fconvb27_20" param {lr_mult: 10 decay_mult: 1} param {lr_mult: 20 decay_mult: 0}
+  convolution_param { num_output: 128 kernel_size:1 pad: 0  weight_filler {type: "gaussian" std: 0.01} bias_filler {type: "constant" value: 0}}}
+
+#---------   collect info from 15 to 20 ----------------
+layer {name: "Pass_b2_15to20" type: "Eltwise" bottom:"fconvb27_15to20_step2" bottom:"fconvb27_20" top: "fconvb27_20+"}
+layer {name: "relub27_20" type: "ReLU" bottom: "fconvb27_20+" top: "fconvb27_20+"}
+
+#---------   pass info from: 20 to 21 (7*7*2) ----------------
+layer {name: "fconvb27_20to21_step1" type: "Convolution" bottom: "fconvb27_20+" top: "fconvb27_20to21_step1" param {lr_mult: 10 decay_mult: 2} param {lr_mult: 20 decay_mult: 0}
+  convolution_param { num_output: 64 kernel_size:7 pad: 3 weight_filler {type: "gaussian" std: 0.01}  bias_filler {type: "constant" value: 0}}}
+layer {name: "relub27_20to21step1" type: "ReLU" bottom: "fconvb27_20to21_step1" top: "fconvb27_20to21_step1"}
+#----step 2 
+layer {name: "fconvb27_20to21_step2" type: "Convolution" bottom: "fconvb27_20to21_step1" top: "fconvb27_20to21_step2" param {lr_mult: 10 decay_mult: 2} param {lr_mult: 20 decay_mult: 0}
+  convolution_param { num_output: 128 kernel_size:7 pad: 3 weight_filler {type: "gaussian" std: 0.01}  bias_filler {type: "constant" value: 0}}}
+
+#######################################################
+#-------------- fconv7_21 -----------------
+layer {name: "fconvb27_21" type: "Convolution" bottom: "fconv6_bn" top: "fconvb27_21" param {lr_mult: 10 decay_mult: 1} param {lr_mult: 20 decay_mult: 0}
+  convolution_param { num_output: 128 kernel_size:1 pad: 0  weight_filler {type: "gaussian" std: 0.01} bias_filler {type: "constant" value: 0}}}
+
+#---------   collect info from 20 to 21 ----------------
+layer {name: "Pass_b2_20to21" type: "Eltwise" bottom:"fconvb27_20to21_step2" bottom:"fconvb27_21" top: "fconvb27_21+"}
+layer {name: "relub27_21" type: "ReLU" bottom: "fconvb27_21+" top: "fconvb27_21+"}
+
+#---------   pass info from: 21 to 22 (7*7*2) ----------------
+layer {name: "fconvb27_21to22_step1" type: "Convolution" bottom: "fconvb27_21+" top: "fconvb27_21to22_step1" param {lr_mult: 10 decay_mult: 2} param {lr_mult: 20 decay_mult: 0}
+  convolution_param { num_output: 64 kernel_size:7 pad: 3 weight_filler {type: "gaussian" std: 0.01}  bias_filler {type: "constant" value: 0}}}
+layer {name: "relub27_21to22_step1" type: "ReLU" bottom: "fconvb27_21to22_step1" top: "fconvb27_21to22_step1"}
+#----step 2 
+layer {name: "fconvb27_21to22_step2" type: "Convolution" bottom: "fconvb27_21to22_step1" top: "fconvb27_21to22_step2" param {lr_mult: 10 decay_mult: 2} param {lr_mult: 20 decay_mult: 0}
+  convolution_param { num_output: 128 kernel_size:7 pad: 3 weight_filler {type: "gaussian" std: 0.01}  bias_filler {type: "constant" value: 0}}}
+
+#######################################################
+#-------------- fconv7_22 -----------------
+layer {name: "fconvb27_22" type: "Convolution" bottom: "fconv6_bn" top: "fconvb27_22" param {lr_mult: 10 decay_mult: 1} param {lr_mult: 20 decay_mult: 0}
+  convolution_param { num_output: 128 kernel_size:1 pad: 0  weight_filler {type: "gaussian" std: 0.01} bias_filler {type: "constant" value: 0}}}
+
+#---------   collect info from 21 to 22 ----------------
+layer {name: "Pass_b2_21to22" type: "Eltwise" bottom:"fconvb27_21to22_step2" bottom:"fconvb27_22" top: "fconvb27_22+"}
+layer {name: "relub27_22" type: "ReLU" bottom: "fconvb27_22+" top: "fconvb27_22+"}
+
+#---------   pass info from: 22 to 23 (7*7*2) ----------------
+layer {name: "fconvb27_22to23_step1" type: "Convolution" bottom: "fconvb27_22+" top: "fconvb27_22to23_step1" param {lr_mult: 10 decay_mult: 2} param {lr_mult: 20 decay_mult: 0}
+  convolution_param { num_output: 64 kernel_size:7 pad: 3 weight_filler {type: "gaussian" std: 0.01}  bias_filler {type: "constant" value: 0}}}
+layer {name: "relub27_22to23_step1" type: "ReLU" bottom: "fconvb27_22to23_step1" top: "fconvb27_22to23_step1"}
+#----step 2 
+layer {name: "fconvb27_22to23_step2" type: "Convolution" bottom: "fconvb27_22to23_step1" top: "fconvb27_22to23_step2" param {lr_mult: 10 decay_mult: 2} param {lr_mult: 20 decay_mult: 0}
+  convolution_param { num_output: 128 kernel_size:7 pad: 3 weight_filler {type: "gaussian" std: 0.01}  bias_filler {type: "constant" value: 0}}}
+
+#######################################################
+#-------------- fconv7_23 -----------------
+layer {name: "fconvb27_23" type: "Convolution" bottom: "fconv6_bn" top: "fconvb27_23" param {lr_mult: 10 decay_mult: 1} param {lr_mult: 20 decay_mult: 0}
+  convolution_param { num_output: 128 kernel_size:1 pad: 0  weight_filler {type: "gaussian" std: 0.01} bias_filler {type: "constant" value: 0}}}
+
+#---------   collect info from 22 to 23 ----------------
+layer {name: "Pass_b2_22to23" type: "Eltwise" bottom:"fconvb27_22to23_step2" bottom:"fconvb27_23" top: "fconvb27_23+"}
+layer {name: "relub27_23" type: "ReLU" bottom: "fconvb27_23+" top: "fconvb27_23+"}
+
+#---------   pass info from: 23 to 24 (7*7*2) ----------------
+layer {name: "fconvb27_23to24_step1" type: "Convolution" bottom: "fconvb27_23+" top: "fconvb27_23to24_step1" param {lr_mult: 10 decay_mult: 2} param {lr_mult: 20 decay_mult: 0}
+  convolution_param { num_output: 64 kernel_size:7 pad: 3 weight_filler {type: "gaussian" std: 0.01}  bias_filler {type: "constant" value: 0}}}
+layer {name: "relub27_23to24_step1" type: "ReLU" bottom: "fconvb27_23to24_step1" top: "fconvb27_23to24_step1"}
+#----step 2 
+layer {name: "fconvb27_23to24_step2" type: "Convolution" bottom: "fconvb27_23to24_step1" top: "fconvb27_23to24_step2" param {lr_mult: 10 decay_mult: 2} param {lr_mult: 20 decay_mult: 0}
+  convolution_param { num_output: 128 kernel_size:7 pad: 3 weight_filler {type: "gaussian" std: 0.01}  bias_filler {type: "constant" value: 0}}}
+
+#######################################################
+#-------------- fconv7_24 -----------------
+layer {name: "fconvb27_24" type: "Convolution" bottom: "fconv6_bn" top: "fconvb27_24" param {lr_mult: 10 decay_mult: 1} param {lr_mult: 20 decay_mult: 0}
+  convolution_param { num_output: 128 kernel_size:1 pad: 0  weight_filler {type: "gaussian" std: 0.01} bias_filler {type: "constant" value: 0}}}
+
+#---------   collect info from 23 to 24 ----------------
+layer {name: "Pass_b2_23to24" type: "Eltwise"  bottom:"fconvb27_23to24_step2" bottom:"fconvb27_24" top: "fconvb27_24+"}
+layer {name: "relub27_24" type: "ReLU" bottom: "fconvb27_24+" top: "fconvb27_24+"}
+
+#---------   pass info from: 24 to 25 (7*7*2) ----------------
+layer {name: "fconvb27_24to25_step1" type: "Convolution" bottom: "fconvb27_24+" top: "fconvb27_24to25_step1" param {lr_mult: 10 decay_mult: 2} param {lr_mult: 20 decay_mult: 0}
+  convolution_param { num_output: 64 kernel_size:7 pad: 3 weight_filler {type: "gaussian" std: 0.01}  bias_filler {type: "constant" value: 0}}}
+layer {name: "relub27_24to23_step1" type: "ReLU" bottom: "fconvb27_24to25_step1" top: "fconvb27_24to25_step1"}
+#----step 2 
+layer {name: "fconvb27_24to25_step2" type: "Convolution" bottom: "fconvb27_24to25_step1" top: "fconvb27_24to25_step2" param {lr_mult: 10 decay_mult: 2} param {lr_mult: 20 decay_mult: 0}
+  convolution_param { num_output: 128 kernel_size:7 pad: 3 weight_filler {type: "gaussian" std: 0.01}  bias_filler {type: "constant" value: 0}}}
+
+#######################################################
+#-------------- fconv7_25 -----------------
+layer {name: "fconvb27_25" type: "Convolution" bottom: "fconv6_bn" top: "fconvb27_25" param {lr_mult: 10 decay_mult: 1} param {lr_mult: 20 decay_mult: 0}
+  convolution_param { num_output: 128 kernel_size:1 pad: 0  weight_filler {type: "gaussian" std: 0.01} bias_filler {type: "constant" value: 0}}}
+
+#---------   collect info from 24 to 25 ----------------
+layer {name: "Pass_b2_24to25" type: "Eltwise" bottom:"fconvb27_24to25_step2" bottom:"fconvb27_25" top: "fconvb27_25+"}
+layer {name: "relub27_25" type: "ReLU" bottom: "fconvb27_25+" top: "fconvb27_25+"}
+
+#---------   pass info from: 25 to 26 (9*9*2) ----------------
+layer {name: "fconvb27_25to26_step1" type: "Convolution" bottom: "fconvb27_25+" top: "fconvb27_25to26_step1" param {lr_mult: 10 decay_mult: 2} param {lr_mult: 20 decay_mult: 0}
+  convolution_param { num_output: 64 kernel_size:7 pad: 3 weight_filler {type: "gaussian" std: 0.01}  bias_filler {type: "constant" value: 0}}}
+layer {name: "relub27_25to26_step1" type: "ReLU" bottom: "fconvb27_25to26_step1" top: "fconvb27_25to26_step1"}
+#----step 2 
+layer {name: "fconvb27_25to26_step2" type: "Convolution" bottom: "fconvb27_25to26_step1" top: "fconvb27_25to26_step2" param {lr_mult: 10 decay_mult: 2} param {lr_mult: 20 decay_mult: 0}
+  convolution_param { num_output: 128 kernel_size:7 pad: 3 weight_filler {type: "gaussian" std: 0.01}  bias_filler {type: "constant" value: 0}}}
+
+
+
+#######################################################
+#-------------- fconv7_26 -----------------
+layer {name: "fconvb27_26" type: "Convolution" bottom: "fconv6_bn" top: "fconvb27_26" param {lr_mult: 10 decay_mult: 1} param {lr_mult: 20 decay_mult: 0}
+  convolution_param { num_output: 128 kernel_size:1 pad: 0  weight_filler {type: "gaussian" std: 0.01} bias_filler {type: "constant" value: 0}}}
+#---------   collect info from 25 to 26 ----------------
+layer {name: "Pass_b2_25to26" type: "Eltwise" bottom:"fconvb27_25to26_step2" bottom:"fconvb27_26" top: "fconvb27_26+"}
+layer {name: "relub27_26" type: "ReLU" bottom: "fconvb27_26+" top: "fconvb27_26+"}
+
+
+
+
+#######################################################
+#-------------- negative -----------------
+#######################################################
+#-------------- fconv7_27 -----------------
+layer {name: "fconvb27_27" type: "Convolution" bottom: "fconv6_bn" top: "fconvb27_27" param {lr_mult: 10 decay_mult: 1} param {lr_mult: 20 decay_mult: 0}
+  convolution_param { num_output: 512 kernel_size:1 pad: 0  weight_filler {type: "gaussian" std: 0.01} bias_filler {type: "constant" value: 0}}}
+
+layer {name: "relub27_27" type: "ReLU" bottom: "fconvb27_27" top: "fconvb27_27+"}
+layer {
+  name: "drop7_27"
+  type: "ChannelDropout"
+  bottom: "fconvb27_27+"
+  top: "fconvb27_27+"
+  dropout_param {
+    dropout_ratio: 0.5
+  }
+}
+
+
+#############################################################################################################################
+#                 Concate 2 branches
+##############################################################################################################################
+layer { name: "fconv7_1_concat"  type: "Concat" bottom: "fconv7_1+"  bottom: "fconvb27_1+"  top: "fconv7_1_concat"  concat_param { axis: 1 }}
+layer { name: "fconv7_2_concat"  type: "Concat" bottom: "fconv7_2+"  bottom: "fconvb27_2+"  top: "fconv7_2_concat"  concat_param { axis: 1 }}
+layer { name: "fconv7_3_concat"  type: "Concat" bottom: "fconv7_3+"  bottom: "fconvb27_3+"  top: "fconv7_3_concat"  concat_param { axis: 1 }}
+layer { name: "fconv7_4_concat"  type: "Concat" bottom: "fconv7_4+"  bottom: "fconvb27_4+"  top: "fconv7_4_concat"  concat_param { axis: 1 }}
+layer { name: "fconv7_5_concat"  type: "Concat" bottom: "fconv7_5+"  bottom: "fconvb27_5+"  top: "fconv7_5_concat"  concat_param { axis: 1 }}
+layer { name: "fconv7_6_concat"  type: "Concat" bottom: "fconv7_6+"  bottom: "fconvb27_6+"  top: "fconv7_6_concat"  concat_param { axis: 1 }}
+layer { name: "fconv7_7_concat"  type: "Concat" bottom: "fconv7_7+"  bottom: "fconvb27_7+"  top: "fconv7_7_concat"  concat_param { axis: 1 }}
+layer { name: "fconv7_8_concat"  type: "Concat" bottom: "fconv7_8+"  bottom: "fconvb27_8+"  top: "fconv7_8_concat"  concat_param { axis: 1 }}
+layer { name: "fconv7_9_concat"  type: "Concat" bottom: "fconv7_9+"  bottom: "fconvb27_9+"  top: "fconv7_9_concat"  concat_param { axis: 1 }}
+layer { name: "fconv7_10_concat" type: "Concat" bottom: "fconv7_10+" bottom: "fconvb27_10+" top: "fconv7_10_concat" concat_param { axis: 1 }}
+layer { name: "fconv7_11_concat" type: "Concat" bottom: "fconv7_11+" bottom: "fconvb27_11+" top: "fconv7_11_concat" concat_param { axis: 1 }}
+layer { name: "fconv7_12_concat" type: "Concat" bottom: "fconv7_12+" bottom: "fconvb27_12+" top: "fconv7_12_concat" concat_param { axis: 1 }}
+layer { name: "fconv7_13_concat" type: "Concat" bottom: "fconv7_13+" bottom: "fconvb27_13+" top: "fconv7_13_concat" concat_param { axis: 1 }}
+layer { name: "fconv7_14_concat" type: "Concat" bottom: "fconv7_14+" bottom: "fconvb27_14+" top: "fconv7_14_concat" concat_param { axis: 1 }}
+layer { name: "fconv7_15_concat" type: "Concat" bottom: "fconv7_15+" bottom: "fconvb27_15+" top: "fconv7_15_concat" concat_param { axis: 1 }}
+layer { name: "fconv7_16_concat" type: "Concat" bottom: "fconv7_16+" bottom: "fconvb27_16+" top: "fconv7_16_concat" concat_param { axis: 1 }}
+layer { name: "fconv7_17_concat" type: "Concat" bottom: "fconv7_17+" bottom: "fconvb27_17+" top: "fconv7_17_concat" concat_param { axis: 1 }}
+layer { name: "fconv7_18_concat" type: "Concat" bottom: "fconv7_18+" bottom: "fconvb27_18+" top: "fconv7_18_concat" concat_param { axis: 1 }}
+layer { name: "fconv7_19_concat" type: "Concat" bottom: "fconv7_19+" bottom: "fconvb27_19+" top: "fconv7_19_concat" concat_param { axis: 1 }}
+layer { name: "fconv7_20_concat" type: "Concat" bottom: "fconv7_20+" bottom: "fconvb27_20+" top: "fconv7_20_concat" concat_param { axis: 1 }}
+layer { name: "fconv7_21_concat" type: "Concat" bottom: "fconv7_21+" bottom: "fconvb27_21+" top: "fconv7_21_concat" concat_param { axis: 1 }}
+layer { name: "fconv7_22_concat" type: "Concat" bottom: "fconv7_22+" bottom: "fconvb27_22+" top: "fconv7_22_concat" concat_param { axis: 1 }}
+layer { name: "fconv7_23_concat" type: "Concat" bottom: "fconv7_23+" bottom: "fconvb27_23+" top: "fconv7_23_concat" concat_param { axis: 1 }}
+layer { name: "fconv7_24_concat" type: "Concat" bottom: "fconv7_24+" bottom: "fconvb27_24+" top: "fconv7_24_concat" concat_param { axis: 1 }}
+layer { name: "fconv7_25_concat" type: "Concat" bottom: "fconv7_25+" bottom: "fconvb27_25+" top: "fconv7_25_concat" concat_param { axis: 1 }}
+layer { name: "fconv7_26_concat" type: "Concat" bottom: "fconv7_26+" bottom: "fconvb27_26+" top: "fconv7_26_concat" concat_param { axis: 1 }}
+
+
+########################################################
+#------------------- fconv9 ----------------------------
+#-------------- fconv9_1 -----------------
+layer {name: "fconv9_1" type: "Convolution" bottom: "fconv7_1_concat" top: "fconv9_1" param {lr_mult: 10 decay_mult: 1} param {lr_mult: 20 decay_mult: 0}
+  convolution_param {num_output: 13 kernel_size: 1 pad: 0 weight_filler {type: "gaussian" std: 0.1} bias_filler {type: "constant" value: 0}}}
+#-------------- fconv9_2 -----------------
+layer {name: "fconv9_2" type: "Convolution" bottom: "fconv7_2_concat" top: "fconv9_2" param {lr_mult: 10 decay_mult: 1} param {lr_mult: 20 decay_mult: 0}
+  convolution_param {num_output: 13 kernel_size: 1 pad: 0 weight_filler {type: "gaussian" std: 0.1} bias_filler {type: "constant" value: 0}}}
+#-------------- fconv9_3 -----------------
+layer {name: "fconv9_3" type: "Convolution" bottom: "fconv7_3_concat" top: "fconv9_3" param {lr_mult: 10 decay_mult: 1} param {lr_mult: 20 decay_mult: 0}
+  convolution_param {num_output: 13 kernel_size: 1 pad: 0 weight_filler {type: "gaussian" std: 0.1} bias_filler {type: "constant" value: 0}}}
+#-------------- fconv9_4 -----------------
+layer {name: "fconv9_4" type: "Convolution" bottom: "fconv7_4_concat" top: "fconv9_4" param {lr_mult: 10 decay_mult: 1} param {lr_mult: 20 decay_mult: 0}
+  convolution_param {num_output: 13 kernel_size: 1 pad: 0 weight_filler {type: "gaussian" std: 0.1} bias_filler {type: "constant" value: 0}}}
+#-------------- fconv9_5 -----------------
+layer {name: "fconv9_5" type: "Convolution" bottom: "fconv7_5_concat" top: "fconv9_5" param {lr_mult: 10 decay_mult: 1} param {lr_mult: 20 decay_mult: 0}
+  convolution_param {num_output: 13 kernel_size: 1 pad: 0 weight_filler {type: "gaussian" std: 0.1} bias_filler {type: "constant" value: 0}}}
+#-------------- fconv9_6 -----------------
+layer {name: "fconv9_6" type: "Convolution" bottom: "fconv7_6_concat" top: "fconv9_6" param {lr_mult: 10 decay_mult: 1} param {lr_mult: 20 decay_mult: 0}
+  convolution_param {num_output: 13 kernel_size: 1 pad: 0 weight_filler {type: "gaussian" std: 0.1} bias_filler {type: "constant" value: 0}}}
+#-------------- fconv9_7 -----------------
+layer {name: "fconv9_7" type: "Convolution" bottom: "fconv7_7_concat" top: "fconv9_7" param {lr_mult: 10 decay_mult: 1} param {lr_mult: 20 decay_mult: 0}
+  convolution_param {num_output: 13 kernel_size: 1 pad: 0 weight_filler {type: "gaussian" std: 0.1} bias_filler {type: "constant" value: 0}}}
+#-------------- fconv9_8 -----------------
+layer {name: "fconv9_8" type: "Convolution" bottom: "fconv7_8_concat" top: "fconv9_8" param {lr_mult: 10 decay_mult: 1} param {lr_mult: 20 decay_mult: 0}
+  convolution_param {num_output: 13 kernel_size: 1 pad: 0 weight_filler {type: "gaussian" std: 0.1} bias_filler {type: "constant" value: 0}}}
+#-------------- fconv9_9 -----------------
+layer {name: "fconv9_9" type: "Convolution" bottom: "fconv7_9_concat" top: "fconv9_9" param {lr_mult: 10 decay_mult: 1} param {lr_mult: 20 decay_mult: 0}
+  convolution_param {num_output: 13 kernel_size: 1 pad: 0 weight_filler {type: "gaussian" std: 0.01} bias_filler {type: "constant" value: 0}}}
+#-------------- fconv9_10 -----------------
+layer {name: "fconv9_10" type: "Convolution" bottom: "fconv7_10_concat" top: "fconv9_10" param {lr_mult: 10 decay_mult: 1} param {lr_mult: 20 decay_mult: 0}
+  convolution_param {num_output: 13 kernel_size: 1 pad: 0 weight_filler {type: "gaussian" std: 0.1} bias_filler {type: "constant" value: 0}}}
+#-------------- fconv9_11 -----------------
+layer {name: "fconv9_11" type: "Convolution" bottom: "fconv7_11_concat" top: "fconv9_11" param {lr_mult: 10 decay_mult: 1} param {lr_mult: 20 decay_mult: 0}
+  convolution_param {num_output: 13 kernel_size: 1 pad: 0 weight_filler {type: "gaussian" std: 0.1} bias_filler {type: "constant" value: 0}}}
+#-------------- fconv9_12 -----------------
+layer {name: "fconv9_12" type: "Convolution" bottom: "fconv7_12_concat" top: "fconv9_12" param {lr_mult: 10 decay_mult: 1} param {lr_mult: 20 decay_mult: 0}
+  convolution_param {num_output: 13 kernel_size: 1 pad: 0 weight_filler {type: "gaussian" std: 0.1} bias_filler {type: "constant" value: 0}}}
+#-------------- fconv9_13 -----------------
+layer {name: "fconv9_13" type: "Convolution" bottom: "fconv7_13_concat" top: "fconv9_13" param {lr_mult: 10 decay_mult: 1} param {lr_mult: 20 decay_mult: 0}
+  convolution_param {num_output: 13 kernel_size: 1 pad: 0 weight_filler {type: "gaussian" std: 0.1} bias_filler {type: "constant" value: 0}}}
+#-------------- fconv9_14 -----------------
+layer {name: "fconv9_14" type: "Convolution" bottom: "fconv7_14_concat" top: "fconv9_14" param {lr_mult: 10 decay_mult: 1} param {lr_mult: 20 decay_mult: 0}
+  convolution_param {num_output: 13 kernel_size: 1 pad: 0 weight_filler {type: "gaussian" std: 0.1} bias_filler {type: "constant" value: 0}}}
+#-------------- fconv9_15 -----------------
+layer {name: "fconv9_15" type: "Convolution" bottom: "fconv7_15_concat" top: "fconv9_15" param {lr_mult: 10 decay_mult: 1} param {lr_mult: 20 decay_mult: 0}
+  convolution_param {num_output: 13 kernel_size: 1 pad: 0 weight_filler {type: "gaussian" std: 0.1} bias_filler {type: "constant" value: 0}}}
+#-------------- fconv9_16 -----------------
+layer {name: "fconv9_16" type: "Convolution" bottom: "fconv7_16_concat" top: "fconv9_16" param {lr_mult: 10 decay_mult: 1} param {lr_mult: 20 decay_mult: 0}
+  convolution_param {num_output: 13 kernel_size: 1 pad: 0 weight_filler {type: "gaussian" std: 0.1} bias_filler {type: "constant" value: 0}}}
+#-------------- fconv9_17 -----------------
+layer {name: "fconv9_17" type: "Convolution" bottom: "fconv7_17_concat" top: "fconv9_17" param {lr_mult: 10 decay_mult: 1} param {lr_mult: 20 decay_mult: 0}
+  convolution_param {num_output: 13 kernel_size: 1 pad: 0 weight_filler {type: "gaussian" std: 0.1} bias_filler {type: "constant" value: 0}}}
+#-------------- fconv9_18 -----------------
+layer {name: "fconv9_18" type: "Convolution" bottom: "fconv7_18_concat" top: "fconv9_18" param {lr_mult: 10 decay_mult: 1} param {lr_mult: 20 decay_mult: 0}
+  convolution_param {num_output: 13 kernel_size: 1 pad: 0 weight_filler {type: "gaussian" std: 0.1} bias_filler {type: "constant" value: 0}}}
+#-------------- fconv9_19 -----------------
+layer {name: "fconv9_19" type: "Convolution" bottom: "fconv7_19_concat" top: "fconv9_19" param {lr_mult: 10 decay_mult: 1} param {lr_mult: 20 decay_mult: 0}
+  convolution_param {num_output: 13 kernel_size: 1 pad: 0 weight_filler {type: "gaussian" std: 0.1} bias_filler {type: "constant" value: 0}}}
+#-------------- fconv9_20-----------------
+layer {name: "fconv9_20" type: "Convolution" bottom: "fconv7_20_concat" top: "fconv9_20" param {lr_mult: 10 decay_mult: 1} param {lr_mult: 20 decay_mult: 0}
+  convolution_param {num_output: 13 kernel_size: 1 pad: 0 weight_filler {type: "gaussian" std: 0.1} bias_filler {type: "constant" value: 0}}}
+#-------------- fconv9_21-----------------
+layer {name: "fconv9_21" type: "Convolution" bottom: "fconv7_21_concat" top: "fconv9_21" param {lr_mult: 10 decay_mult: 1} param {lr_mult: 20 decay_mult: 0}
+  convolution_param {num_output: 13 kernel_size: 1 pad: 0 weight_filler {type: "gaussian" std: 0.1} bias_filler {type: "constant" value: 0}}}
+#-------------- fconv9_22-----------------
+layer {name: "fconv9_22" type: "Convolution" bottom: "fconv7_22_concat" top: "fconv9_22" param {lr_mult: 10 decay_mult: 1} param {lr_mult: 20 decay_mult: 0}
+  convolution_param {num_output: 13 kernel_size: 1 pad: 0 weight_filler {type: "gaussian" std: 0.1} bias_filler {type: "constant" value: 0}}}
+#-------------- fconv9_23-----------------
+layer {name: "fconv9_23" type: "Convolution" bottom: "fconv7_23_concat" top: "fconv9_23" param {lr_mult: 10 decay_mult: 1} param {lr_mult: 20 decay_mult: 0}
+  convolution_param {num_output: 13 kernel_size: 1 pad: 0 weight_filler {type: "gaussian" std: 0.1} bias_filler {type: "constant" value: 0}}}
+#-------------- fconv9_24-----------------
+layer {name: "fconv9_24" type: "Convolution" bottom: "fconv7_24_concat" top: "fconv9_24" param {lr_mult: 10 decay_mult: 1} param {lr_mult: 20 decay_mult: 0}
+  convolution_param {num_output: 13 kernel_size: 1 pad: 0 weight_filler {type: "gaussian" std: 0.1} bias_filler {type: "constant" value: 0}}}
+#-------------- fconv9_25-----------------
+layer {name: "fconv9_25" type: "Convolution" bottom: "fconv7_25_concat" top: "fconv9_25" param {lr_mult: 10 decay_mult: 1} param {lr_mult: 20 decay_mult: 0}
+  convolution_param {num_output: 13 kernel_size: 1 pad: 0 weight_filler {type: "gaussian" std: 0.1} bias_filler {type: "constant" value: 0}}}
+#-------------- fconv9_26-----------------
+layer {name: "fconv9_26" type: "Convolution" bottom: "fconv7_26_concat" top: "fconv9_26" param {lr_mult: 10 decay_mult: 1} param {lr_mult: 20 decay_mult: 0}
+  convolution_param {num_output: 13 kernel_size: 1 pad: 0 weight_filler {type: "gaussian" std: 0.1} bias_filler {type: "constant" value: 0}}}
+#-------------- fconv9_27-----------------
+layer {name: "fconv9_27" type: "Convolution" bottom: "fconvb27_27+" top: "fconv9_27" param {lr_mult: 10 decay_mult: 1} param {lr_mult: 20 decay_mult: 0}
+  convolution_param {num_output: 1 kernel_size: 1 pad: 0 weight_filler {type: "gaussian" std: 0.1} bias_filler {type: "constant" value: 0}}}
+
+# -----  concat  -----
+layer {
+  name: "fconv9"
+  type: "Concat"
+  bottom: "fconv9_1" 
+  bottom: "fconv9_2" 
+  bottom: "fconv9_3" 
+  bottom: "fconv9_4" 
+  bottom: "fconv9_5" 
+  bottom: "fconv9_6" 
+  bottom: "fconv9_7" 
+  bottom: "fconv9_8" 
+  bottom: "fconv9_9"
+  bottom: "fconv9_10"
+  bottom: "fconv9_11"
+  bottom: "fconv9_12"
+  bottom: "fconv9_13"
+  bottom: "fconv9_14"
+  bottom: "fconv9_15"
+  bottom: "fconv9_16"
+  bottom: "fconv9_17"
+  bottom: "fconv9_18"
+  bottom: "fconv9_19"
+  bottom: "fconv9_20"
+  bottom: "fconv9_21"
+  bottom: "fconv9_22"
+  bottom: "fconv9_23"
+  bottom: "fconv9_24"
+  bottom: "fconv9_25"
+  bottom: "fconv9_26"
+  bottom: "fconv9_27"
+  top: "fconv9"
+  concat_param {
+    axis: 1
+  }
+}
+
+
+
+layer {
+  name: "loss"
+  type: "Softmax"
+  bottom: "fconv9"
+  top: "loss"
+}

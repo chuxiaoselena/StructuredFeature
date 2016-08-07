@@ -1,0 +1,18 @@
+net: "protofiles/train_val.prototxt"
+display: 10
+test_iter: 400
+test_interval: 250
+test_initialization: false
+average_loss: 10
+base_lr: 0.002
+lr_policy: "step"
+gamma:0.1
+stepsize: 5000
+max_iter: 10000
+momentum: 0.9
+iter_size: 16
+weight_decay: 0.0005
+snapshot: 250
+snapshot_prefix: "cache/Strict"
+solver_mode: GPU
+debug_info: false

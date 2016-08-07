@@ -1,0 +1,7 @@
+
+
+python ./data/map2lmdb_datum.py \
+./data/lsp/train_label/ \
+map \
+../cache/lsp/LMDB_train_label \
+./data/lsp/mean_ingless
