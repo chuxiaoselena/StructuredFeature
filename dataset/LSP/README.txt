@@ -1,6 +1,6 @@
 Leeds Sports Pose Dataset
 Sam Johnson and Mark Everingham
-http://www.comp.leeds.ac.uk/mat4saj/lsp.html
+http://sam.johnson.io/research/lsp.html
 
 This dataset contains 2000 images of mostly sports people
 gathered from Flickr. The images have been scaled such that the
@@ -44,6 +44,6 @@ In proceedings of the 21st British Machine Vision Conference (BMVC2010)
    note = {doi:10.5244/C.24.12}
 }
 
-For further information on this dataset including our results and protocols please visit: 
-http://www.comp.leeds.ac.uk/mat4saj/lsp.html
+For further information on this dataset including our results and protocols please visit:
+http://sam.johnson.io/research/lsp.html
 E-mail: s.a.johnson04@leeds.ac.uk
